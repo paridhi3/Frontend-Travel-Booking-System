@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Header from "./components/Header/Header";
+import Header2 from "./components/Header2/Header2";
+import Footer from "./components/Footer/Footer";
+import { ContextProvider } from "./components/Context/Context";
+import { Routes, Route } from "react-router-dom";
+import LogIn from "./pages/LogIn/LogIn";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Flights from "./components/Flights/Flights/Flights";
+import Trains from "./components/Trains/Trains/Trains";
+import Buses from "./components/Buses/Buses/Buses";
+import "./styles/App.css";
 
 function App() {
+
+  const [fixedHeader, setFixedHeader] = useState(false);
+  window.addEventListener('scroll', ()=>{
+    if(window.pageYOffset>72){ // 72 means 72px(or 4.5rem)
+      setFixedHeader(true);
+    }else{
+      setFixedHeader(false);
+    }
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContextProvider>
+      {fixedHeader? <Header2 />: <Header /> }
+      {/* <Header /> */}
+      <div id="main">
+      <Routes>
+          <Route path='/' element={<Flights />} />
+          <Route path='/login' element={<LogIn />} />
+          {/* <Route path='/register' element={<Register />} /> */}
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/flights' element={<Flights />} />
+          <Route path='/buses' element={<Buses />} />
+          <Route path='/trains' element={<Trains />} />
+          {/* <Route path='/checkout' element={<Checkout />} /> */}
+          {/* <Route path='*' element={<NotFound/>} /> */}
+        </Routes>
+      </div>
+      <Footer />
+    </ContextProvider>
   );
 }
 

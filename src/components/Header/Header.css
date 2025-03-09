@@ -1,0 +1,93 @@
+.header{
+
+    z-index: 100; /* Ensure it is above other content */
+
+    height: 6.5rem;
+    width: 100vw;
+    background-color: #051423;
+    /* position: absolute; */
+    display: flex;
+    justify-content: center;
+}
+
+/* .header-contents{
+    box-sizing: border-box;
+    height: 5rem;
+    width: 75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+} */
+
+.header-contents {
+    height: 100%;  /* Instead of 5rem */
+    width: 75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.logo{
+    height: 3rem;
+}
+.pages-link{
+    width: 40rem;
+    height: 4.5rem;
+    
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    /* left: 21.08rem; */
+    /* left: 25%; */
+    top: 4.5rem;
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);    
+    justify-items: center;
+    align-items: center;
+}
+.page-link{
+    font-size: 20px;
+    font-family: 'Poppins';
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+.page-link:hover{
+    opacity: 0.8;
+}
+.active{
+    color: blue;
+    border-bottom: 3px solid blue;
+}
+
+.user-profile{
+    box-sizing: border-box;
+    width: 8.15rem;
+    height: 3.1rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(221, 221, 221, 0.384);
+    border-radius: 1rem;
+    color: white;
+    font-family: 'Poppins';
+}
+.user-image{
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 50%;
+    border: 1px black solid;
+}
+.user-name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-profile:hover{
+    color: aqua;
+}
