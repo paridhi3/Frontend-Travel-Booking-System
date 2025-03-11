@@ -23,7 +23,6 @@ const FetchTrains = ({ type, train }) => {
     const source = train.source;
     const destination = train.destination;
     // const totalSeats = train.totalSeats;
-    const availableSeats = train.availableSeats;
     const price = train.price;
     const trainClass = train.trainClass;
 
@@ -121,10 +120,6 @@ const FetchTrains = ({ type, train }) => {
           <div>
             Train Class: <br />
             <p className="detail">{trainClass}</p>
-          </div>
-          <div>
-            Available Seats: <br />
-            <p className="detail">{availableSeats}</p>
           </div>
         </nav>
 

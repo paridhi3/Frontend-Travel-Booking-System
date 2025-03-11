@@ -23,7 +23,6 @@ const FetchBuses = ({ type, bus }) => {
     const source = bus.source;
     const destination = bus.destination;
     // const totalSeats = bus.totalSeats;
-    const availableSeats = bus.availableSeats;
     const price = bus.price;
     const busClass = bus.busClass;
 
@@ -121,10 +120,6 @@ const FetchBuses = ({ type, bus }) => {
           <div>
             Bus Class: <br />
             <p className="detail">{busClass}</p>
-          </div>
-          <div>
-            Available Seats: <br />
-            <p className="detail">{availableSeats}</p>
           </div>
         </nav>
 

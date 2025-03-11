@@ -12,8 +12,12 @@ class PassengerService {
     return await axios.get(`${API_URL}/${id}`);
   }
 
-  async addPassenger(passenger) {
-    return await axios.post(API_URL, passenger);
+  async registerPassenger(passenger) {
+    return await axios.post(`${API_URL}/register`, passenger);
+  }
+
+  async loginPassenger(email, password) {
+    return await axios.post(`${API_URL}/req/login`, { email, password });
   }
 
   async deletePassenger(id) {

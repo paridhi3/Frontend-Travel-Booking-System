@@ -33,7 +33,7 @@
 }
 .login-form>h2{
     color: purple;
-    font-family: cursive;
+    font-family: 'Poppins';
 }
 .login-form input{
     width: 20rem;
@@ -44,7 +44,7 @@
     outline: none;
     border: 1px rgba(116, 116, 116, 0.774) solid;
     border-radius: 0.5rem;
-    font-family: cursive;
+    font-family: 'Poppins';
 }
 
 .login-form input:hover{
@@ -63,19 +63,19 @@
     outline: none;
     border: none;
     padding-left: 10px;
-    background-color: rgb(175, 0, 175);
+    background-color: rgb(103, 2, 103);
     color: white;
     font-size: larger;
     font-weight: 600;
-    font-family: cursive;
+    font-family: 'Poppins';
     cursor: pointer;
 }
 .login-form #submit:hover{
-    background-color: rgb(136, 0, 136);
-    color: rgb(192, 192, 192);
+    background-color: rgb(175, 0, 175);
+    color: white;
 }
 .login-form #submit:active{
-    background-color: rgb(175, 0, 175);
+    background-color: rgb(103, 2, 103);
     color: white;
     font-size: large;
 }

@@ -24,7 +24,6 @@ const FetchFlights = ({ type, flight }) => {
     const source = flight.source;
     const destination = flight.destination;
     // const totalSeats = flight.totalSeats;
-    const availableSeats = flight.availableSeats;
     const price = flight.price;
     const flightClass = flight.flightClass;
 
@@ -96,10 +95,6 @@ const FetchFlights = ({ type, flight }) => {
             To: <br />
             <p className="detail">{destination}</p>
           </div>
-          <div>
-            Airline: <br />
-            <p className="detail">{airlineName}</p>
-          </div>
         </nav>
 
         <nav className="middle-section">
@@ -119,6 +114,10 @@ const FetchFlights = ({ type, flight }) => {
 
 
         <nav className="right-section">
+        <div>
+            Airline: <br />
+            <p className="detail">{airlineName}</p>
+          </div>
           <div>
             Price: <br />
             <p className="detail">₹ {price}</p>
@@ -126,10 +125,6 @@ const FetchFlights = ({ type, flight }) => {
           <div>
             Flight Class: <br />
             <p className="detail">{flightClass}</p>
-          </div>
-          <div>
-            Available Seats: <br />
-            <p className="detail">{availableSeats}</p>
           </div>
         </nav>
 

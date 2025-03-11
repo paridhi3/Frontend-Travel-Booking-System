@@ -20,16 +20,8 @@ class BookingService {
     return await axios.get(`${API_URL}/transport/${transportType}`);
   }
 
-  async bookTrain(booking) {
-    return await axios.post(`${API_URL}/train`, booking);
-  }
-
-  async bookFlight(booking) {
-    return await axios.post(`${API_URL}/flight`, booking);
-  }
-
-  async bookBus(booking) {
-    return await axios.post(`${API_URL}/bus`, booking);
+  async book(booking, passengerId, transportId) {
+    return await axios.post(`${API_URL}book/${passengerId}/${transportId}`, booking);
   }
 
   async updateBookingStatus(bookingId, status) {
