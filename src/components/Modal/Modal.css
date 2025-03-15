@@ -27,7 +27,7 @@
 .modal span{
     font-size: 2.5rem;
     font-weight: bold;
-    font-family: cursive;
+    font-family: 'Poppins';
     color: green;
     text-shadow: 2px 2px 2px black;
 }
@@ -72,7 +72,7 @@
     box-shadow: 2px 2px 2px black;
     font-size: 15px;
     font-weight: bold;
-    font-family: cursive;
+    font-family: 'Poppins';
     cursor: pointer;
 }
 .modal button:hover{

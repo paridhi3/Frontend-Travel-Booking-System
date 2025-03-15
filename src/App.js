@@ -10,6 +10,7 @@ import Flights from "./components/Flights/Flights/Flights";
 import Trains from "./components/Trains/Trains/Trains";
 import Buses from "./components/Buses/Buses/Buses";
 import "./styles/App.css";
+import Register from "./pages/Register/Register";
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
       <Routes>
           <Route path='/' element={<Flights />} />
           <Route path='/login' element={<LogIn />} />
-          {/* <Route path='/register' element={<Register />} /> */}
+          <Route path='/register' element={<Register />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/flights' element={<Flights />} />
           <Route path='/buses' element={<Buses />} />

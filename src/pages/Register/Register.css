@@ -1,0 +1,123 @@
+.register-container{
+    box-sizing: border-box;
+    background-image:  linear-gradient(#051423, #15457b);
+    /* height: 40rem; */
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+.register{
+    box-sizing: border-box;
+    width: 75rem;
+    /* height: 34rem; */
+    border-radius: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 5rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.register>h1{
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: purple;
+    border-radius: 50%;
+}
+.register>h2{
+    color: purple;
+    font-family: 'Poppins';
+}
+.register input{
+    width: 20rem;
+    height: 2.5rem;
+    margin: 1rem;
+    padding-left: 10px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px rgba(116, 116, 116, 0.774) solid;
+    border-radius: 0.5rem;
+    font-family: 'Poppins';
+}
+
+.register select{
+    width: 20rem;
+    height: 2.5rem;
+    margin: 1rem;
+    padding-left: 10px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px rgba(116, 116, 116, 0.774) solid;
+    border-radius: 0.5rem;
+    font-family: 'Poppins';
+}
+
+.register input:hover{
+    background-color: rgb(235, 235, 235);
+}
+.register select:hover{
+    background-color: rgb(235, 235, 235);
+}
+
+.register input:focus{
+    border: 2px rgba(0, 204, 255, 0.774) solid;
+}
+.register select:focus{
+    border: 2px rgba(0, 204, 255, 0.774) solid;
+}
+
+.register #submit{
+    width: 20rem;
+    height: 2.5rem;
+    box-sizing: border-box;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    background-color: rgb(175, 0, 175);
+    color: white;
+    font-size: larger;
+    font-weight: 600;
+    font-family: 'Poppins';
+    cursor: pointer;
+}
+.register #submit:hover{
+    background-color: rgb(136, 0, 136);
+    color: rgb(192, 192, 192);
+}
+.register #submit:active{
+    background-color: rgb(175, 0, 175);
+    color: white;
+    font-size: large;
+}
+.register a{
+    color: blueviolet;
+}
+.register a:hover{
+    color: rgb(92, 28, 151);
+}
+.register a:active{
+    color: blueviolet;
+}
+
+.password-input {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Extra space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.toggle-password-icon {
+    right: 10px; /* Adjust position */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
