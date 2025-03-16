@@ -88,3 +88,17 @@
 .login-form a:active{
     color: blueviolet;
 }
+
+.password-input {
+    width: 100%;
+    padding: 10px 40px 10px 10px; /* Extra space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.toggle-password-icon {
+    right: 10px; /* Adjust position */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

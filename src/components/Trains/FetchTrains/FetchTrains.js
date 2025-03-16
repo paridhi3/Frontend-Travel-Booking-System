@@ -8,8 +8,9 @@ import Modal from "../../Modal/Modal";
 const FetchTrains = ({ type, train }) => {
   const myContext = useContext(MyContext);
   const navigate = useNavigate();
+
   const bookClicked = (e) => {
-    if (myContext.currUser.email === "") {
+    if (!myContext.currUser.email) {
       myContext.displayPortal(true);
       return;
     }
@@ -18,7 +19,6 @@ const FetchTrains = ({ type, train }) => {
   };
 
   if (type === "trains") {
-    console.log(train);
     const train_id = train.trainId;
     const source = train.source;
     const destination = train.destination;
@@ -29,10 +29,6 @@ const FetchTrains = ({ type, train }) => {
     const departureTimeRaw = train.departureTime;
     const arrivalTimeRaw = train.arrivalTime; // Fixed typo
 
-    console.log("Raw Departure Time:", departureTimeRaw);
-    console.log("Raw Arrival Time:", arrivalTimeRaw);
-    console.log(trainClass);
-
     // If it's a full timestamp, convert it to a Date
     const departureTime = departureTimeRaw.includes("T") 
       ? new Date(departureTimeRaw).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) 
@@ -41,9 +37,6 @@ const FetchTrains = ({ type, train }) => {
     const arrivalTime = arrivalTimeRaw.includes("T") 
       ? new Date(arrivalTimeRaw).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) 
       : arrivalTimeRaw.slice(0, 5); // If it's just HH:mm:ss, slice
-
-    console.log("Formatted Departure Time:", departureTime);
-    console.log("Formatted Arrival Time:", arrivalTime);
 
 
     const calculateDuration = (departureTimeRaw, arrivalTimeRaw) => {
@@ -73,8 +66,6 @@ const FetchTrains = ({ type, train }) => {
     };
     
     const duration = calculateDuration(departureTimeRaw.slice(0, 5), arrivalTimeRaw.slice(0, 5));
-    
-    console.log("Train Duration:", duration);
     
 
 

@@ -1,4 +1,4 @@
-.fetch-flights{
+/* .fetch-flights{
     width: 75rem;
     padding: 2rem 3rem;
     margin-bottom: 3rem;
@@ -29,6 +29,31 @@
     font-size: 22px;
     font-weight: normal;
 }
+
+#check-btn {
+    width: 17rem;
+    height: 2.5rem;
+    padding: 8px;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    background: #0E0E55;
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.2);
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -7%;
+    right: 21rem;
+    cursor: pointer;
+    transition: 250ms;
+}
+
 #book-btn{
     width: 12rem;
     height: 2.5rem;
@@ -39,7 +64,6 @@
     color: white;
     background: #0E0E55;
     box-shadow: 0 1px 7px 0 rgba(0,0,0,.2);
-    text-transform: uppercase;
     font-family: 'Poppins';
     font-size: 20px;
     font-weight: 700;
@@ -48,13 +72,81 @@
     justify-content: center;
     position: absolute;
     bottom: -7%;
-    left: 31.5rem;
+    left: 21rem;
     cursor: pointer;
     transition: 250ms;
 }
+
 #book-btn:hover{
     transform: scale(1.05);
 }
 #book-btn:active{
     transform: scale(1);
-}
+} */
+
+.fetch-flights-container {
+    display: flex;
+  }
+  
+  .filter-sidebar {
+    width: 250px;
+    padding: 20px;
+    background: #f4f4f4;
+    border-right: 1px solid #ddd;
+  }
+  
+  .filter-sidebar h3 {
+    margin-bottom: 10px;
+  }
+  
+  .filter-sidebar label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .filter-sidebar select,
+  .filter-sidebar input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+  }
+  
+  .flights-list {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .flight-card {
+    width: 250px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: white;
+  }
+  
+  .flight-card h3 {
+    margin-bottom: 5px;
+  }
+  
+  .flight-card p {
+    margin: 3px 0;
+  }
+  
+  .flight-card button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .flight-card button:hover {
+    background: #0056b3;
+  }
+  

@@ -21,13 +21,17 @@ const Modal = ({ type }) => {
         navigate('/login');
     };
 
+    const toTitleCase = (str) => {
+        return str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase());    
+    }
+
     return (
         <div onClick={portalClose} className='modal-container'>
             <div className='modal' onClick={(e) => e.stopPropagation()}>
                 {type === 'logIn' && (
                     <>
                         <nav className='logIn-modal'>
-                            Hi <span>{myContext.currUser?.name?.split(' ')[0] ?? 'Guest'}</span>,
+                            Hi <span>{myContext.currUser?.fullName ? toTitleCase(myContext.currUser.fullName.split(' ')[0]) : 'Guest'}</span>
                         </nav>
                         <nav className='logIn-modal'>Welcome to MakeMyTrip</nav>
                     </>

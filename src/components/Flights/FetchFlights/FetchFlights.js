@@ -8,31 +8,42 @@ import Modal from "../../Modal/Modal";
 const FetchFlights = ({ type, flight }) => {
   const myContext = useContext(MyContext);
   const navigate = useNavigate();
+
   const bookClicked = (e) => {
-    if (myContext.currUser.email === "") {
+    if (!myContext.currUser.email) {
       myContext.displayPortal(true);
       return;
     }
-    myContext.setPrice(e.target.value);
     navigate("/checkout");
   };
 
+  // const checkAvailabilityClicked = (e) => {
+  //   if (!myContext.currUser.email) {
+  //     myContext.displayPortal(true);
+  //     return;
+  //   }
+  //   navigate("/flight/availability");
+  // }
+  const checkAvailabilityClicked = () => {
+    if (!myContext.currUser.email) {
+      myContext.displayPortal(true);
+      return;
+    }
+    
+    navigate(`/available-flights`, { state: { flightId: flight.flightId } });
+  };
+  
+
   if (type === "flights") {
-    console.log(flight);
     const flight_id = flight.flightId;
     const airlineName = flight.airlineName;
     const source = flight.source;
     const destination = flight.destination;
-    // const totalSeats = flight.totalSeats;
     const price = flight.price;
     const flightClass = flight.flightClass;
 
     const departureTimeRaw = flight.departureTime;
-    const arrivalTimeRaw = flight.arrivalTime; // Fixed typo
-
-    console.log("Raw Departure Time:", departureTimeRaw);
-    console.log("Raw Arrival Time:", arrivalTimeRaw);
-    console.log(flightClass);
+    const arrivalTimeRaw = flight.arrivalTime;
 
     // If it's a full timestamp, convert it to a Date
     const departureTime = departureTimeRaw.includes("T") 
@@ -42,9 +53,6 @@ const FetchFlights = ({ type, flight }) => {
     const arrivalTime = arrivalTimeRaw.includes("T") 
       ? new Date(arrivalTimeRaw).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) 
       : arrivalTimeRaw.slice(0, 5); // If it's just HH:mm:ss, slice
-
-    console.log("Formatted Departure Time:", departureTime);
-    console.log("Formatted Arrival Time:", arrivalTime);
 
 
     const calculateDuration = (departureTimeRaw, arrivalTimeRaw) => {
@@ -74,8 +82,6 @@ const FetchFlights = ({ type, flight }) => {
     };
     
     const duration = calculateDuration(departureTimeRaw.slice(0, 5), arrivalTimeRaw.slice(0, 5));
-    
-    console.log("Flight Duration:", duration);
     
 
 
@@ -126,17 +132,31 @@ const FetchFlights = ({ type, flight }) => {
             Flight Class: <br />
             <p className="detail">{flightClass}</p>
           </div>
+          <button value={price} onClick={checkAvailabilityClicked} id="check-btn">
+              Check Availability
+          </button>
         </nav>
 
-        <button value={price} onClick={bookClicked} id="book-btn">
-          Book
-        </button>
+        {/* <div className="buttons-container">
+            <button value={price} onClick={bookClicked} id="book-btn">
+              Book
+            </button>
+            <button value={price} onClick={checkAvailabilityClicked} id="book-btn">
+              Check Availability
+            </button>
+        </div> */}
 
-        {myContext.portalView &&
-          createPortal(
-            <Modal type={"notLogedIn"} />,
-            document.getElementById("portal")
-          )}
+            <button value={price} onClick={bookClicked} id="book-btn">
+              Book
+            </button>
+            <button value={price} onClick={checkAvailabilityClicked} id="check-btn">
+              Check Availability
+          </button>
+            
+
+
+        {myContext.portalView && createPortal(<Modal type={"notLogedIn"} />, document.getElementById("portal"))}
+
       </div>
     );
   }

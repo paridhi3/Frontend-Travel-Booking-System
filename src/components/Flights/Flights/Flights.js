@@ -52,9 +52,10 @@ const Flights = () => {
                     <div className="flghts-tickets-container">
                         <h1>Available Flights</h1>
                         <div className="flghts-tickets">
-                            {flights.map((flight) => (
+                            {/* {flights.map((flight) => (
                                 <FetchFlights key={flight.flightId} type="flights" flight={flight} />
-                            ))}
+                            ))} */}
+                            <FetchFlights type="flights" flights={flights} />
                         </div>
                     </div>
                 </>
