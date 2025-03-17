@@ -20,20 +20,28 @@ const months = [
 const today = getDate(new Date());
 
 const SearchFlights = ({ onSearch }) => {
-
   const [state, setState] = useState({
     source: "Delhi",
     destination: "Mumbai",
     flightClass: "Business",
   });
 
+  // const [getDeparture, setDeparture] = useState({
+  //   min: today.date,
+  //   value: today.date,
+  //   date: Number(today.dd),
+  //   month: months[Number(today.mm) - 1],
+  //   year: `${today.yyyy}`.slice(2, 4),
+  //   day: today.day,
+  // });
+
   const [getDeparture, setDeparture] = useState({
-    min: today.date,
-    value: today.date,
-    date: Number(today.dd),
-    month: months[Number(today.mm) - 1],
-    year: `${today.yyyy}`.slice(2, 4),
-    day: today.day,
+    min: today.date, // Keep min as today
+    value: "", // Set default date as none
+    date: null, // No default date
+    month: null,
+    year: null,
+    day: null,
   });
 
   // const departureChange = (e) => {
@@ -71,15 +79,11 @@ const SearchFlights = ({ onSearch }) => {
       departureDate: getDeparture,
     });
   };
-  
 
   return (
     <div className="search-content-container">
       <div className="search-content">
-        <form
-          onSubmit={handleSearchClick}
-          className="search-content-form"
-        >
+        <form onSubmit={handleSearchClick} className="search-content-form">
           <div className="trip-details">
             <div className="trip-details-input">
               <label htmlFor="from">From</label>
@@ -88,9 +92,7 @@ const SearchFlights = ({ onSearch }) => {
                 id="from"
                 type="text"
                 placeholder="From"
-                onChange={(e) =>
-                  setState({ ...state, source: e.target.value })
-                }
+                onChange={(e) => setState({ ...state, source: e.target.value })}
                 value={state.source}
               />
             </div>
@@ -110,7 +112,7 @@ const SearchFlights = ({ onSearch }) => {
             </div>
 
             <div className="trip-details-input">
-              <label htmlFor="departure">Departure</label>
+              <label htmlFor="departure">Departure Date</label>
               <nav className="departure-display">
                 <p>
                   <span>{getDeparture.date}</span>
