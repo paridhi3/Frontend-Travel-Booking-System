@@ -16,16 +16,15 @@ const months = [
   " Nov",
   " Dec",
 ];
-// const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const today = getDate(new Date());
 
-const SearchFlights = ({ type }) => {
+const SearchFlights = ({ onSearch }) => {
 
   const [state, setState] = useState({
-    fromValue: "Delhi",
-    toValue: "Mumbai",
-    classValue: "Business"
+    source: "Delhi",
+    destination: "Mumbai",
+    flightClass: "Business",
   });
 
   const [getDeparture, setDeparture] = useState({
@@ -37,49 +36,11 @@ const SearchFlights = ({ type }) => {
     day: today.day,
   });
 
-  /*--------------------------------------*/
-  // const [getReturn, setReturn] = useState({
-  //   value: today.date,
-  //   min: today.date,
-  //   date: Number(today.dd),
-  //   month: months[Number(today.mm) - 1],
-  //   year: `${today.yyyy}`.slice(2, 4),
-  //   day: today.day,
-  // });
-  /*--------------------------------------*/
-
-  const departureChange = (e) => {
-    let date = new Date(e.target.value);
-    const currentDate = getDate(date);
-    setDeparture({
-      ...getDeparture,
-      value: currentDate.date,
-      date: Number(currentDate.dd),
-      month: months[Number(currentDate.mm) - 1],
-      year: `${currentDate.yyyy}`.slice(2, 4),
-      day: currentDate.day,
-    });
-
-    /*--------------------------------------*/
-    // const dayAfter = getDate(new Date(date.getTime() + 24 * 60 * 60 * 1000));
-    // setReturn({
-    //   min: currentDate.date,
-    //   value: dayAfter.date,
-    //   date: Number(dayAfter.dd),
-    //   month: months[Number(dayAfter.mm) - 1],
-    //   year: `${dayAfter.yyyy}`.slice(2, 4),
-    //   day: dayAfter.day,
-    // });
-    /*--------------------------------------*/
-
-  };
-
-/*--------------------------------------*/
-  // const returnChange = (e) => {
+  // const departureChange = (e) => {
   //   let date = new Date(e.target.value);
   //   const currentDate = getDate(date);
-  //   setReturn({
-  //     ...getReturn,
+  //   setDeparture({
+  //     ...getDeparture,
   //     value: currentDate.date,
   //     date: Number(currentDate.dd),
   //     month: months[Number(currentDate.mm) - 1],
@@ -87,15 +48,39 @@ const SearchFlights = ({ type }) => {
   //     day: currentDate.day,
   //   });
   // };
-/*--------------------------------------*/
+
+  const departureChange = (e) => {
+    let date = new Date(e.target.value);
+    const currentDate = getDate(date);
+    setDeparture((prev) => ({
+      ...prev,
+      value: currentDate.date,
+      date: Number(currentDate.dd),
+      month: months[Number(currentDate.mm) - 1],
+      year: `${currentDate.yyyy}`.slice(2, 4),
+      day: currentDate.day,
+    }));
+  };
+
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    onSearch({
+      source: state.source,
+      destination: state.destination,
+      flightClass: state.flightClass,
+      departureDate: getDeparture,
+    });
+  };
+  
 
   return (
     <div className="search-content-container">
       <div className="search-content">
-        <form onSubmit={(e) => e.preventDefault()} className="search-content-form">
-
+        <form
+          onSubmit={handleSearchClick}
+          className="search-content-form"
+        >
           <div className="trip-details">
-
             <div className="trip-details-input">
               <label htmlFor="from">From</label>
               <input
@@ -104,9 +89,9 @@ const SearchFlights = ({ type }) => {
                 type="text"
                 placeholder="From"
                 onChange={(e) =>
-                  setState({ ...state, formValue: e.target.value })
+                  setState({ ...state, source: e.target.value })
                 }
-                value={state.fromValue}
+                value={state.source}
               />
             </div>
 
@@ -118,9 +103,9 @@ const SearchFlights = ({ type }) => {
                 type="text"
                 placeholder="To"
                 onChange={(e) =>
-                  setState({ ...state, toValue: e.target.value })
+                  setState({ ...state, destination: e.target.value })
                 }
-                value={state.toValue}
+                value={state.destination}
               />
             </div>
 
@@ -153,19 +138,17 @@ const SearchFlights = ({ type }) => {
                 type="text"
                 placeholder="Flight Class"
                 onChange={(e) =>
-                  setState({ ...state, classValue: e.target.value })
+                  setState({ ...state, flightClass: e.target.value })
                 }
-                value={state.classValue}
+                value={state.flightClass}
               />
             </div>
             {/*--------------------------------------*/}
-
           </div>
 
           <button type="submit" id="search-btn">
             Search
           </button>
-
         </form>
       </div>
     </div>

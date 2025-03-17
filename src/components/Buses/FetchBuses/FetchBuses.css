@@ -1,4 +1,4 @@
-/* .fetch-buses{
+.fetch-buses{
     width: 75rem;
     padding: 2rem 3rem;
     margin-bottom: 3rem;
@@ -29,6 +29,31 @@
     font-size: 22px;
     font-weight: normal;
 }
+
+#check-btn {
+    width: 17rem;
+    height: 2.5rem;
+    padding: 8px;
+    outline: none;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    background: #0E0E55;
+    box-shadow: 0 1px 7px 0 rgba(0,0,0,.2);
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -7%;
+    right: 21rem;
+    cursor: pointer;
+    transition: 250ms;
+}
+
 #book-btn{
     width: 12rem;
     height: 2.5rem;
@@ -39,7 +64,6 @@
     color: white;
     background: #0E0E55;
     box-shadow: 0 1px 7px 0 rgba(0,0,0,.2);
-    text-transform: uppercase;
     font-family: 'Poppins';
     font-size: 20px;
     font-weight: 700;
@@ -48,13 +72,14 @@
     justify-content: center;
     position: absolute;
     bottom: -7%;
-    left: 31.5rem;
+    left: 21rem;
     cursor: pointer;
     transition: 250ms;
 }
+
 #book-btn:hover{
     transform: scale(1.05);
 }
 #book-btn:active{
     transform: scale(1);
-} */
+}
