@@ -1,5 +1,5 @@
 import './Header2.css';
-import logo from '../../images/MakeMyTrip-logo-blue.png'
+import logo from '../../images/logo-blue.png'
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { GiCommercialAirplane } from "react-icons/gi";

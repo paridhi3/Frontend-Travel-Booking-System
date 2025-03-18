@@ -19,13 +19,10 @@
     align-items: center;
     font-family: calibri;
 }
-.not-found p{
-    font-size: 3rem;
-    font-weight: bolder;
-    color: #4a4a4a;
-    margin: 0 0 5px 0;
+.not-found-img {
+    height: 25rem;
 }
 .not-found span{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #9b9b9b;
 }

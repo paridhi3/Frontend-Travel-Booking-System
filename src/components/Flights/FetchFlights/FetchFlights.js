@@ -202,7 +202,7 @@ const FetchFlights = ({ flight }) => {
       return;
     }
 
-    navigate(`/available-flights`, { state: { flightId: flight.flightId } });
+    navigate(`/flight/FLIGHT/${flight.flightId}`);
   };
 
   const {

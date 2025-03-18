@@ -1,74 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import AvailabilityService from "../../../service/AvailabilityService";
+import BookingService from "../../../service/BookingService";
+import HorizontalDatePicker from "../../HorizontalDatePicker/HorizontalDatePicker";
+import FlightSeatPicker from "../FlightSeatPicker/FlightSeatPicker";
 
 const AvailableFlights = () => {
-  const location = useLocation();
-  const flightId = location.state?.flightId || ""; // Get flight ID from navigation state
+  const { transportType, transportId } = useParams(); // Get values from URL
 
-  const [transportId, setTransportId] = useState(flightId);
   const [travelDate, setTravelDate] = useState("");
   const [availability, setAvailability] = useState(null);
   const [error, setError] = useState("");
 
-  const handleCheckAvailability = async () => {
-    if (!transportId || !travelDate) {
-      setError("Please enter both Flight ID and Travel Date.");
-      return;
-    }
-    setError("");
+  const handleDateSelection = (date) => {
+    setTravelDate(date);
+  };
+
+  const handleCheckAvailability = useCallback(async () => {
+    if (!travelDate) return;
 
     try {
-      const response = await AvailabilityService.checkAvailability(
-        transportId,
-        "FLIGHT",
-        travelDate
-      );
-      setAvailability(response.data);
+      const response = await AvailabilityService.getAvailability(transportId, transportType, travelDate);
+      setAvailability(response.data);  // Expecting { availableSeats: number, occupiedSeats: [] }
+      setError("");
     } catch (err) {
       setError("No availability found or an error occurred.");
       setAvailability(null);
     }
-  };
+  }, [transportId, transportType, travelDate]);
 
   useEffect(() => {
-    if (transportId) {
-      setError("");
+    handleCheckAvailability();
+  }, [handleCheckAvailability]);
+
+  const handleBooking = async (seatNumber) => {
+    const bookingDetails = {
+      travelDate,
+      seatNumber,
+      transportType,
+    };
+
+    try {
+      await BookingService.book(bookingDetails, 1, transportId); // Assuming passengerId = 1 (Replace with actual)
+      
+      // Update availability after booking
+      setAvailability((prev) => ({
+        ...prev,
+        occupiedSeats: [...prev.occupiedSeats, seatNumber],
+      }));
+      
+      alert(`Seat ${seatNumber} booked successfully!`);
+    } catch (err) {
+      alert("Booking failed. Please try again.");
     }
-  }, [transportId]);
+  };
 
   return (
     <div className="available-flights-container">
       <h2>Check Available Flights</h2>
-      <div className="input-group">
-        <label>Flight ID:</label>
-        <input
-          type="number"
-          value={transportId}
-          onChange={(e) => setTransportId(e.target.value)}
-          placeholder="Enter Flight ID"
-        />
-      </div>
-      <div className="input-group">
-        <label>Travel Date:</label>
-        <input
-          type="date"
-          value={travelDate}
-          onChange={(e) => setTravelDate(e.target.value)}
-        />
-      </div>
-      <button onClick={handleCheckAvailability}>Check Availability</button>
+
+      <HorizontalDatePicker onSelectDate={handleDateSelection} />
+
+      <FlightSeatPicker 
+        availability={availability} 
+        onBookSeat={handleBooking}
+      />
 
       {error && <p className="error">{error}</p>}
-
-      {availability && (
-        <div className="availability-info">
-          <h3>Flight Availability</h3>
-          <p><strong>Flight ID:</strong> {availability.transportId}</p>
-          <p><strong>Available Seats:</strong> {availability.available_seats}</p>
-          <p><strong>Travel Date:</strong> {availability.travel_date}</p>
-        </div>
-      )}
     </div>
   );
 };

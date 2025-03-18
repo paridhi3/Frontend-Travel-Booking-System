@@ -1,0 +1,59 @@
+.date-picker-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.date-scroll {
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  margin: auto;
+}
+
+.date-item {
+  width: 60px;
+  height: 90px;
+  /* background-color: #f04e5e; */
+  color: black;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px 5px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.date-item:hover {
+  transform: scale(1.1);
+}
+
+.selected {
+  background-color: #f04e5e;
+  color: white;
+}
+
+.day {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.date {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.month {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/* Disabled Dates */
+.date-item.disabled {
+  /* background-color: #f0f0f0; */
+  color: #aaa;
+  cursor: not-allowed;
+}
