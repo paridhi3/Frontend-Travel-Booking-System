@@ -26,12 +26,36 @@ class BookingService {
     });
   }
 
+  // async book(booking, passengerId, transportId) {
+  //   return await axios.post(
+  //     `${API_URL}/book/${passengerId}/${transportId}`,
+  //     booking
+  //   );
+  // }
+
   async book(booking, passengerId, transportId) {
-    return await axios.post(
-      `${API_URL}/book/${passengerId}/${transportId}`,
-      booking
-    );
+    try {
+      const response = await axios.post(
+        `${API_URL}/book/${passengerId}/${transportId}`,
+        booking
+      );
+  
+      console.log("Booking API full response:", response);
+  
+      // Accept 201 (Created) as a successful booking
+      if (response?.status === 200 || response?.status === 201) {
+        return response.data; // Return the actual API response
+      } else {
+        throw new Error(response?.data?.message || "Booking failed due to unexpected API response.");
+      }
+    } catch (error) {
+      console.error("Booking API error:", error.response?.data || error.message);
+      throw error; // Ensure error is propagated properly
+    }
   }
+  
+  
+  
 
   async updateBookingStatus(bookingId, status) {
     return await axios.put(`${API_URL}/${bookingId}/status`, null, {

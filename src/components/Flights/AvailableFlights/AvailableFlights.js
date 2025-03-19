@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import BookingService from "../../../service/BookingService";
+import AvailabilityService from "../../../service/AvailabilityService";
 import HorizontalDatePicker from "../../HorizontalDatePicker/HorizontalDatePicker";
 import FlightSeatPicker from "../FlightSeatPicker/FlightSeatPicker";
 
-const getTodayDate = () => new Date().toISOString().split("T")[0];
+const today = () => new Date().toISOString().split("T")[0];
 
 const AvailableFlights = () => {
+  const navigate = useNavigate();
   const { transportType, transportId } = useParams(); // Get values from URL
 
-  const [travelDate, setTravelDate] = useState(getTodayDate);
+  const [travelDate, setTravelDate] = useState(today);
   const [availability, setAvailability] = useState({ occupiedSeats: [] });
+  const [availabilityToday, setAvailabilityToday] = useState([]);
   const [passengerId, setPassengerId] = useState(null);
   const [error, setError] = useState("");
 
@@ -30,16 +33,45 @@ const AvailableFlights = () => {
     setTravelDate(date);
   };
 
-  const handleCheckAvailability = useCallback(async () => {
-    if (!travelDate) {
-      console.log("No travel date selected");
-      return;
+  const fetchAvailabilityToday = async () => {
+    try {
+      const response = await AvailabilityService.getAvailabilityByTransportType(
+        "FLIGHT"
+      );
+      const flightsAvailableToday = response.data.filter(
+        (item) => item.travelDate === today()
+      );
+      setAvailabilityToday(flightsAvailableToday);
+    } catch (error) {
+      console.error("Error fetching availability today:", error);
     }
+  };
 
+  useEffect(() => {
+    fetchAvailabilityToday();
+  }, []);
+
+  const handleCheckAvailability = useCallback(async () => {
     try {
       console.log(
         `Fetching booked seats for ${transportType} ID: ${transportId} on ${travelDate}`
       );
+
+      const isDepartedToday =
+        travelDate === today() &&
+        !availabilityToday.some(
+          (flight) => flight.transportId === Number(transportId)
+        );
+
+      if (isDepartedToday) {
+        console.warn("This flight has already departed today.");
+        setAvailability({
+          occupiedSeats: "ALL",
+          message:
+            "This flight has departed today. Please choose another date.",
+        });
+        return;
+      }
 
       const response = await BookingService.getBookedSeats(
         transportId,
@@ -62,10 +94,9 @@ const AvailableFlights = () => {
       setError("No availability found or an error occurred.");
       setAvailability({ occupiedSeats: [] });
     }
-  }, [transportId, transportType, travelDate]);
+  }, [transportId, transportType, travelDate, availabilityToday]);
 
   useEffect(() => {
-    console.log("Fetching availability...");
     handleCheckAvailability();
   }, [handleCheckAvailability]);
 
@@ -73,20 +104,28 @@ const AvailableFlights = () => {
     const bookingDetails = { travelDate, seatNumber, transportType };
 
     try {
-      await BookingService.book(bookingDetails, passengerId, transportId);
-      console.log("Booking API call successful!");
+      const response = await BookingService.book(
+        bookingDetails,
+        passengerId,
+        transportId
+      );
+      console.log("Booking API call successful!", response);
 
       // Update availability after booking
       setAvailability((prev) => ({
         ...prev,
         occupiedSeats: [
           ...new Set([...(prev?.occupiedSeats || []), seatNumber]),
-        ], // ✅ Ensure unique values
+        ],
       }));
 
       alert(`You have selected Seat ${seatNumber}!`);
+      return response; // ✅ Return API response
     } catch (err) {
-      alert("Booking failed. Please try again.");
+      console.error("Booking API error:", err);
+      alert("Booking failed. Redirecting to home.");
+      navigate("/", { replace: true });
+      return null; // ✅ Return null on failure
     }
   };
 
@@ -94,24 +133,24 @@ const AvailableFlights = () => {
     <div className="available-flights-container">
       <HorizontalDatePicker onSelectDate={handleDateSelection} />
 
-      {/* <FlightSeatPicker
-        availability={availability}
-        onBookSeat={handleBooking}
-      /> */}
-      <FlightSeatPicker
-        availability={availability}
-        onBookSeat={handleBooking}
-        transportDetails={{
-          transportId,
-          transportType,
-          travelDate,
-        }}
-        passengerDetails={{
-          passengerId,
-        }}
-      />
+      {availability.occupiedSeats === "ALL" ? (
+        <p className="departed-message">{availability.message}</p>
+      ) : (
+        <FlightSeatPicker
+          availability={availability}
+          onBookSeat={handleBooking}
+          transportDetails={{
+            transportId,
+            transportType,
+            travelDate,
+          }}
+          passengerDetails={{
+            passengerId,
+          }}
+        />
+      )}
 
-      {error && <p className="error">{error}</p>}
+      {error && <p className="departed-message">{error}</p>}
     </div>
   );
 };

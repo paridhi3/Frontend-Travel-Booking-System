@@ -43,6 +43,17 @@ button:hover {
   margin-top: 10px;
 }
 
+p .departed-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background-color: #ffe6e6;
+  border: 1px solid red;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
 .availability-info {
   margin-top: 20px;
   padding: 10px;

@@ -9,14 +9,6 @@ const FetchFlights = ({ flight }) => {
   const myContext = useContext(MyContext);
   const navigate = useNavigate();
 
-  // const bookClicked = () => {
-  //   if (!myContext.currUser.email) {
-  //     myContext.displayPortal(true);
-  //     return;
-  //   }
-  //   navigate("/checkout");
-  // };
-
   const checkAvailabilityClicked = () => {
     if (!myContext.currUser.email) {
       myContext.displayPortal(true);
@@ -119,12 +111,9 @@ const FetchFlights = ({ flight }) => {
           Flight Class: <br />
           <p className="detail">{flightClass}</p>
         </div>
-        <button onClick={checkAvailabilityClicked} id="check-btn">
-          Check Availability
-        </button>
       </nav>
 
-      <button id="book-btn">
+      <button onClick={checkAvailabilityClicked} id="book-btn">
         Book
       </button>
 

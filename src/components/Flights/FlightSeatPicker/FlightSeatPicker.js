@@ -30,7 +30,7 @@ const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passenge
 
   const handleBookClicked = async () => {
     console.log("Confirm booking clicked");
-    
+  
     if (!myContext.currUser.email) {
       console.log("User not logged in, showing login portal.");
       myContext.displayPortal(true); // Open login modal if user is not logged in
@@ -45,7 +45,13 @@ const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passenge
     console.log("Attempting to book seat:", selectedSeat);
   
     try {
-      await onBookSeat(selectedSeat); // ✅ Ensure this is awaited
+      const response = await onBookSeat(selectedSeat); // ✅ Capture API response
+      console.log("Booking API response:", response);
+  
+      if (!response) { // ✅ Check for success flag
+        throw new Error("Booking failed due to API response.");
+      }
+  
       console.log("Seat booked successfully! Navigating to checkout...");
       
       navigate("/checkout", {
@@ -58,9 +64,10 @@ const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passenge
       });
     } catch (error) {
       console.error("Booking failed with error:", error);
-      alert("Booking failed! Please try again.");
+      alert("Booking failed! Redirecting to home...");
+      navigate("/"); // ✅ Redirect to home on failure
     }
-  };
+  };  
   
   
 

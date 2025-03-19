@@ -58,9 +58,7 @@ const Flights = () => {
 
   const fetchAvailability = async () => {
     try {
-      const response = await AvailabilityService.getAvailabilityByTransportType(
-        "FLIGHT"
-      );
+      const response = await AvailabilityService.getAvailabilityByTransportType("FLIGHT");
       setAvailabilityData(response.data);
     } catch (error) {
       setFailed(true);
@@ -149,16 +147,6 @@ const Flights = () => {
               ) : (
                 <p>No flights found.</p>
               )}
-
-              {/* {flights.map((flight) => (
-                <FetchFlights
-                  key={flight.flightId}
-                  type="flights"
-                  flight={flight}
-                />
-              ))} */}
-
-              {/* <FetchFlights type="flights" filters={searchFilters} flights={flights} /> */}
 
             </div>
           </div>
