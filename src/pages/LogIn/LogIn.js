@@ -50,7 +50,11 @@ const LogIn = () => {
                 myContext.displayPortal(true);
                 
                 // ✅ Persist login state
-                localStorage.setItem("loggedInUserEmail", state.email);
+                localStorage.setItem("loggedInUser", JSON.stringify(response.data));
+
+                const storedUser = localStorage.getItem("loggedInUser");
+                console.log("Stored user in localStorage:", storedUser);
+
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -104,7 +108,7 @@ const LogIn = () => {
             </form>
 
             {/* Show Portal (Modal) on Login */}
-            {console.log("(Login.js) Setting portal view to true")}
+            {/* {console.log("(Login.js) Setting portal view to true")} */}
             {myContext.portalView && document.getElementById('portal') && createPortal(<Modal type='logIn' />, document.getElementById('portal'))}
         </div>
     );

@@ -11,9 +11,10 @@ const Modal = ({ type }) => {
 
     const portalClose = () => {
         myContext.displayPortal(false);
-        if (type !== 'logIn') {
-            navigate('/');
-        }
+        // if (type !== 'logIn') {
+        //     navigate('/');
+        // }
+        navigate('/');
     };
 
     const logIn = () => {
@@ -30,10 +31,10 @@ const Modal = ({ type }) => {
             <div className='modal' onClick={(e) => e.stopPropagation()}>
                 {type === 'logIn' && (
                     <>
-                        <nav className='logIn-modal'>
+                        <nav className='logIn-modal-head'>
                             Hi <span>{myContext.currUser?.fullName ? toTitleCase(myContext.currUser.fullName.split(' ')[0]) : 'Guest'}</span>
                         </nav>
-                        <nav className='logIn-modal'>Welcome to MakeMyTrip</nav>
+                        <nav className='logIn-modal-text'>Welcome to Travel Booking System</nav>
                     </>
                 )}
 

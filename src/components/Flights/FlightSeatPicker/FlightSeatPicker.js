@@ -1,96 +1,25 @@
-// import React, { useState } from "react";
-// import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
-// import "./FlightSeatPicker.css";
-
-// const FlightSeatPicker = ({ rows = 6, cols = 6 }) => {
-//   const [selectedSeats, setSelectedSeats] = useState([]);
-
-//   // Dummy occupied seats
-//   const occupiedSeats = ["A2", "B3", "C4", "D5"];
-
-//   // Generate seat IDs (A1, A2... B1, B2...)
-//   const seatRows = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, rows);
-//   const seats = seatRows
-//     .split("")
-//     .flatMap((row) => Array.from({ length: cols }, (_, i) => `${row}${i + 1}`));
-
-//   // Toggle seat selection
-//   const handleSeatClick = (seat) => {
-//     if (occupiedSeats.includes(seat)) return; // Prevent selecting occupied seats
-//     setSelectedSeats((prev) =>
-//       prev.includes(seat) ? prev.filter((s) => s !== seat) : [...prev, seat]
-//     );
-//   };
-
-//   return (
-//     <div className="seat-picker-container">
-//       <h2>Select Your Seats</h2>
-//       <p className="windows-info">
-//         Windows are located on both sides of the plane
-//       </p>
-
-//       <div className="airplane-body">
-//         {/* Left window strip */}
-//         <div className="window-strip"></div>
-
-//         {/* Seats Grid */}
-//         <div className="seats-grid">
-//           {seats.map((seat) => (
-//             <div
-//               key={seat}
-//               className={`seat 
-//                 ${selectedSeats.includes(seat) ? "selected" : ""}
-//                 ${occupiedSeats.includes(seat) ? "occupied" : ""}
-//               `}
-//               onClick={() => handleSeatClick(seat)}
-//             >
-//               <MdOutlineAirlineSeatReclineExtra />
-//               <span>{seat}</span>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Right window strip */}
-//         <div className="window-strip"></div>
-//       </div>
-
-//       {/* Seat Legend */}
-//       <div className="seat-legend">
-//         <div className="legend-item">
-//           <div className="legend-seat available"></div> Available
-//         </div>
-//         <div className="legend-item">
-//           <div className="legend-seat selected"></div> Selected
-//         </div>
-//         <div className="legend-item">
-//           <div className="legend-seat occupied"></div> Occupied
-//         </div>
-//       </div>
-
-//       {/* Selected Seats Info */}
-//       <div className="selected-info">
-//         <strong>Selected Seats:</strong>{" "}
-//         {selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FlightSeatPicker;
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router";
+import { MyContext } from "../../Context/Context";
 import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
 import "./FlightSeatPicker.css";
 
-const FlightSeatPicker = ({ availability, onBookSeat }) => {
+const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passengerDetails }) => {
+  const myContext = useContext(MyContext);
+  const navigate = useNavigate();
+
   const [selectedSeat, setSelectedSeat] = useState(null);
 
   if (!availability) return <p>Loading seats...</p>;
 
-  const { occupiedSeats } = availability;
+  const occupiedSeats = availability?.occupiedSeats ?? []; // Ensure it's always an array
+
+  console.log("Availability Object:", availability);
+  console.log("Rendering FlightSeatPicker - Occupied Seats:", occupiedSeats);
 
   // Generate seat layout (Assuming rows=6, cols=6)
-  const seatRows = "ABCDEF"; 
-  const seats = seatRows.split("").flatMap((row) => 
+  const seatRows = "ABCDEF";
+  const seats = seatRows.split("").flatMap((row) =>
     Array.from({ length: 6 }, (_, i) => `${row}${i + 1}`)
   );
 
@@ -99,12 +28,41 @@ const FlightSeatPicker = ({ availability, onBookSeat }) => {
     setSelectedSeat(seat);
   };
 
-  const handleConfirmBooking = () => {
-    if (selectedSeat) {
-      onBookSeat(selectedSeat);
-      setSelectedSeat(null);
+  const handleBookClicked = async () => {
+    console.log("Confirm booking clicked");
+    
+    if (!myContext.currUser.email) {
+      console.log("User not logged in, showing login portal.");
+      myContext.displayPortal(true); // Open login modal if user is not logged in
+      return;
+    }
+  
+    if (!selectedSeat) {
+      console.log("No seat selected, button should be disabled.");
+      return;
+    }
+  
+    console.log("Attempting to book seat:", selectedSeat);
+  
+    try {
+      await onBookSeat(selectedSeat); // ✅ Ensure this is awaited
+      console.log("Seat booked successfully! Navigating to checkout...");
+      
+      navigate("/checkout", {
+        state: {
+          seatNumber: selectedSeat,
+          transportType: transportDetails.transportType,
+          transportDetails,
+          passengerDetails,
+        },
+      });
+    } catch (error) {
+      console.error("Booking failed with error:", error);
+      alert("Booking failed! Please try again.");
     }
   };
+  
+  
 
   return (
     <div className="seat-picker-container">
@@ -124,8 +82,27 @@ const FlightSeatPicker = ({ availability, onBookSeat }) => {
         ))}
       </div>
 
-      <button 
-        onClick={handleConfirmBooking} 
+      {/* Seat Legend */}
+      <div className="seat-legend">
+        <div className="legend-item">
+          <div className="legend-seat available"></div> Available
+        </div>
+        <div className="legend-item">
+          <div className="legend-seat selected"></div> Selected
+        </div>
+        <div className="legend-item">
+          <div className="legend-seat occupied"></div> Occupied
+        </div>
+      </div>
+
+      {/* Selected Seat Info */}
+      <div className="selected-info">
+        <strong>Selected Seat:</strong> {selectedSeat ? selectedSeat : "None"}
+      </div>
+
+      <button
+        className="confirmBooking"
+        onClick={handleBookClicked}
         disabled={!selectedSeat}
       >
         Confirm Booking

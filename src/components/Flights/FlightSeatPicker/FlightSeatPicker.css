@@ -60,6 +60,30 @@
   background-color: #ddd;
 }
 
+button.confirmBooking {
+  background-color: #007bff; /* Primary blue */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+button.confirmBooking:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+button.confirmBooking:disabled {
+  background-color: #ccc; /* Greyed out when disabled */
+  cursor: not-allowed;
+}
+
+
 /* Seat Status Colors
 /* Available Seat */
 .seat {

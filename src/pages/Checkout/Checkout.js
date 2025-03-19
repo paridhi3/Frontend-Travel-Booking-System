@@ -22,7 +22,7 @@ const Checkout=()=> {
 
     const nameHandler= (e)=>{
         const value = e.target.value;
-        if(!value){
+        if(value === ''){
             setName(value);
             return;
         }
@@ -34,7 +34,7 @@ const Checkout=()=> {
     const numInputHandler=(e)=>{
         const key = e.target.name;
         let value = e.target.value;
-        if(!value){
+        if(value === ''){
             setState({
                 ...state,
                [key]: value,
@@ -63,6 +63,14 @@ const Checkout=()=> {
                 <section className='fare-summary'>
                     <h1>Fare Summary</h1>
                     <div className='summary'>
+                        <div className='base-fare'>
+                            <span>Base Fare</span>
+                            <span>₹ {baseFare}</span>
+                        </div>
+                        <div className='fee-surcharges'>
+                            <span>Fee & Surcharges</span>
+                            <span>₹ {fee}</span>
+                        </div>
                         <div className='total-amount'>
                             <span>Total Amount</span>
                             <span>₹ {total}</span>
