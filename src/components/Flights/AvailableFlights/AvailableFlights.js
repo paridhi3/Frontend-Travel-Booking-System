@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import BookingService from "../../../service/BookingService";
 import AvailabilityService from "../../../service/AvailabilityService";
 import HorizontalDatePicker from "../../HorizontalDatePicker/HorizontalDatePicker";
@@ -8,21 +8,27 @@ import FlightSeatPicker from "../FlightSeatPicker/FlightSeatPicker";
 const today = () => new Date().toISOString().split("T")[0];
 
 const AvailableFlights = () => {
+  const location = useLocation();
+  const flightDetails = location.state?.flightDetails; // Get flight details from navigation state
+  console.log("flightDetails: ", flightDetails);
+
   const navigate = useNavigate();
   const { transportType, transportId } = useParams(); // Get values from URL
+  const [passenger, setPassenger] = useState([]);
 
   const [travelDate, setTravelDate] = useState(today);
   const [availability, setAvailability] = useState({ occupiedSeats: [] });
   const [availabilityToday, setAvailabilityToday] = useState([]);
-  const [passengerId, setPassengerId] = useState(null);
+  // const [passengerId, setPassengerId] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      const user = JSON.parse(storedUser); // Parse stored JSON
-      console.log("Extracted passengerId:", user.passengerId); // Debugging
-      setPassengerId(user.passengerId); // ✅ Set passengerId correctly
+    const storedPassenger = localStorage.getItem("loggedInUser");
+    if (storedPassenger) {
+      const passenger = JSON.parse(storedPassenger); // Parse stored JSON
+      setPassenger(passenger);
+      console.log("Extracted passenger:", passenger); // Debugging
+      // setPassengerId(passenger.passengerId); // ✅ Set passengerId correctly
     } else {
       console.warn("No passenger data found.");
     }
@@ -38,7 +44,7 @@ const AvailableFlights = () => {
       const response = await AvailabilityService.getAvailabilityByTransportType(
         "FLIGHT"
       );
-      const flightsAvailableToday = response.data.filter(
+      const flightsAvailableToday = response.data.filter( // flights that have not departed yet
         (item) => item.travelDate === today()
       );
       setAvailabilityToday(flightsAvailableToday);
@@ -101,15 +107,16 @@ const AvailableFlights = () => {
   }, [handleCheckAvailability]);
 
   const handleBooking = async (seatNumber) => {
-    const bookingDetails = { travelDate, seatNumber, transportType };
+    // const bookingDetails = { travelDate, seatNumber, transportType, transportId, passengerId };
+    // const bookingDetails = { travelDate, seatNumber, transportType };
 
     try {
-      const response = await BookingService.book(
-        bookingDetails,
-        passengerId,
-        transportId
-      );
-      console.log("Booking API call successful!", response);
+      // const response = await BookingService.book(
+      //   bookingDetails,
+      //   passenger.passengerId,
+      //   transportId
+      // );
+      // console.log("Booking API call successful!", response);
 
       // Update availability after booking
       setAvailability((prev) => ({
@@ -120,12 +127,15 @@ const AvailableFlights = () => {
       }));
 
       alert(`You have selected Seat ${seatNumber}!`);
-      return response; // ✅ Return API response
+      // return response; // ✅ Return API response
+
     } catch (err) {
+
       console.error("Booking API error:", err);
       alert("Booking failed. Redirecting to home.");
       navigate("/", { replace: true });
       return null; // ✅ Return null on failure
+
     }
   };
 
@@ -139,14 +149,9 @@ const AvailableFlights = () => {
         <FlightSeatPicker
           availability={availability}
           onBookSeat={handleBooking}
-          transportDetails={{
-            transportId,
-            transportType,
-            travelDate,
-          }}
-          passengerDetails={{
-            passengerId,
-          }}
+          flightDetails={{ flightDetails }}
+          passengerDetails={passenger}
+          travelDate={travelDate}
         />
       )}
 

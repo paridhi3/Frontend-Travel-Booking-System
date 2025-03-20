@@ -4,8 +4,12 @@ import { MyContext } from "../../Context/Context";
 import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
 import "./FlightSeatPicker.css";
 
-const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passengerDetails }) => {
+const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDetails, travelDate }) => {
   const myContext = useContext(MyContext);
+
+  console.log("(FlightSeatPicker.js) passengerDetails: ", passengerDetails);
+  console.log("(FlightSeatPicker.js) transportDetails: ", flightDetails);
+  console.log("travelDate: ", travelDate);
   const navigate = useNavigate();
 
   const [selectedSeat, setSelectedSeat] = useState(null);
@@ -48,18 +52,14 @@ const FlightSeatPicker = ({ availability, onBookSeat, transportDetails, passenge
       const response = await onBookSeat(selectedSeat); // ✅ Capture API response
       console.log("Booking API response:", response);
   
-      if (!response) { // ✅ Check for success flag
-        throw new Error("Booking failed due to API response.");
-      }
-  
-      console.log("Seat booked successfully! Navigating to checkout...");
+      console.log("Seat selected successfully! Navigating to checkout...");
       
       navigate("/checkout", {
         state: {
           seatNumber: selectedSeat,
-          transportType: transportDetails.transportType,
-          transportDetails,
+          transportDetails: flightDetails,
           passengerDetails,
+          travelDate,
         },
       });
     } catch (error) {

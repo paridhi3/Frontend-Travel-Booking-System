@@ -139,7 +139,7 @@ const Flights = () => {
                 flights.map((flight) => (
                   <FetchFlights
                     key={flight.flightId}
-                    type="flights"
+                    type="FLIGHT"
                     flight={flight}
                     filters={isSearchClicked ? searchFilters : undefined}
                   />

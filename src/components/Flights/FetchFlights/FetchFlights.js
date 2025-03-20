@@ -5,17 +5,22 @@ import { MyContext } from "../../Context/Context";
 import { createPortal } from "react-dom";
 import Modal from "../../Modal/Modal";
 
-const FetchFlights = ({ flight }) => {
+const FetchFlights = ({ flight, type }) => {
   const myContext = useContext(MyContext);
   const navigate = useNavigate();
 
   const checkAvailabilityClicked = () => {
+    
     if (!myContext.currUser.email) {
       myContext.displayPortal(true);
       return;
     }
 
-    navigate(`/flight/FLIGHT/${flight.flightId}`);
+    navigate(`/flight/FLIGHT/${flight.flightId}`, {
+      state: {
+        flightDetails: flight
+      }
+    },);
   };
 
   const {
