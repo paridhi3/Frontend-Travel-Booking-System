@@ -13,21 +13,21 @@ const Loader= ({type, faild})=>{
                     faild ? <p style={{color:'pink'}}>Something went worng. Check your internet connection.</p>:
                     <>
                         {
-                            type === 'flights' &&
+                            type === 'flight' &&
                             <>
                                 <img className='plane-gif' src={planeGif} alt="Plane" />
                                 <p>Fetching Available Flights...</p>
                             </>
                         }
                         {
-                            type === 'buses' &&
+                            type === 'bus' &&
                             <>
                                 <img className='bus-gif' src={busGif} alt="Bus" />
                                 <p>Fetching Available Buses...</p>
                             </>
                         }
                         {
-                            type === 'trains' &&
+                            type === 'train' &&
                             <>
                                 <img className='train-gif' src={trainGif} alt="Train" />
                                 <p>Fetching Available Trains...</p>

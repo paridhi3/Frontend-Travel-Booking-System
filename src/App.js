@@ -6,10 +6,14 @@ import { ContextProvider } from "./components/Context/Context";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/LogIn/LogIn";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Flights from "./components/Flights/Flights/Flights";
-import AvailableFlights from "./components/Flights/AvailableFlights/AvailableFlights";
-import Trains from "./components/Trains/Trains/Trains";
-import Buses from "./components/Buses/Buses/Buses";
+// import Flights from "./components/Flights/Flights/Flights";
+// import AvailableFlights from "./components/Flights/AvailableFlights/AvailableFlights";
+// import Trains from "./components/Trains/Trains/Trains";
+// import AvailableTrains from "./components/Trains/AvailableTrains/AvailableTrains";
+// import Buses from "./components/Buses/Buses/Buses";
+// import AvailableBuses from "./components/Buses/AvailableBuses/AvailableBuses";
+import Transport from "./components/Transport/Transport";
+import AvailableTransport from "./components/Transport/AvailableTransport";
 import "./styles/App.css";
 import Register from "./pages/Register/Register";
 import Checkout from "./pages/Checkout/Checkout";
@@ -32,14 +36,19 @@ function App() {
       <Header />
       <div id="main">
       <Routes>
-          <Route path='/' element={<Flights />} />
+          <Route path='/' element={<Transport />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/flights' element={<Flights />} />
-          <Route path="/flight/:transportType/:transportId" element={<AvailableFlights />} />
-          <Route path='/buses' element={<Buses />} />
-          <Route path='/trains' element={<Trains />} />
+          <Route path="/:transportType" element={<Transport />} />
+          <Route path="/:transportType/:transportId" element={<AvailableTransport />} />
+          {/* <Route path="/:mainType/:transportType/:transportId" element={<AvailableTransport />} /> */}
+          {/* <Route path='/flights' element={<Flights />} /> */}
+          {/* <Route path="/flight/:transportType/:transportId" element={<AvailableFlights />} /> */}
+          {/* <Route path='/buses' element={<Buses />} /> */}
+          {/* <Route path="/bus/:transportType/:transportId" element={<AvailableBuses />} /> */}
+          {/* <Route path='/trains' element={<Trains />} /> */}
+          {/* <Route path="/train/:transportType/:transportId" element={<AvailableTrains />} /> */}
           <Route path='/checkout' element={<Checkout />} />
           <Route path='*' element={<NotFound/>} />
         </Routes>

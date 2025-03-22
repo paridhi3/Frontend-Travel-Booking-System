@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "../Context/Context";
 import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
-import "./FlightSeatPicker.css";
+import "../../styles/transport/SeatPicker.css";
 
-const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDetails, travelDate }) => {
+const TrainSeatPicker = ({ availability, onSelectSeat, transportDetails, passengerDetails, travelDate }) => {
   const myContext = useContext(MyContext);
 
-  console.log("(FlightSeatPicker.js) passengerDetails: ", passengerDetails);
-  console.log("(FlightSeatPicker.js) transportDetails: ", flightDetails);
+  console.log("(TrainSeatPicker.js) passengerDetails: ", passengerDetails);
+  console.log("(TrainSeatPicker.js) transportDetails: ", transportDetails);
   console.log("travelDate: ", travelDate);
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDe
   const occupiedSeats = availability?.occupiedSeats ?? []; // Ensure it's always an array
 
   console.log("Availability Object:", availability);
-  console.log("Rendering FlightSeatPicker - Occupied Seats:", occupiedSeats);
+  console.log("Rendering TrainSeatPicker - Occupied Seats:", occupiedSeats);
 
   // Generate seat layout (Assuming rows=6, cols=6)
   const seatRows = "ABCDEF";
@@ -33,7 +33,6 @@ const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDe
   };
 
   const handleBookClicked = async () => {
-    console.log("Confirm booking clicked");
   
     if (!myContext.currUser.email) {
       console.log("User not logged in, showing login portal.");
@@ -46,25 +45,21 @@ const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDe
       return;
     }
   
-    console.log("Attempting to book seat:", selectedSeat);
-  
     try {
-      const response = await onBookSeat(selectedSeat); // ✅ Capture API response
-      console.log("Booking API response:", response);
+      onSelectSeat(selectedSeat); 
   
       console.log("Seat selected successfully! Navigating to checkout...");
       
       navigate("/checkout", {
         state: {
           seatNumber: selectedSeat,
-          transportDetails: flightDetails,
+          transportDetails: transportDetails,
           passengerDetails,
           travelDate,
         },
       });
     } catch (error) {
-      console.error("Booking failed with error:", error);
-      alert("Booking failed! Redirecting to home...");
+      console.error("Seat selection failed with error:", error);
       navigate("/"); // ✅ Redirect to home on failure
     }
   };  
@@ -118,4 +113,4 @@ const FlightSeatPicker = ({ availability, onBookSeat, flightDetails, passengerDe
   );
 };
 
-export default FlightSeatPicker;
+export default TrainSeatPicker;

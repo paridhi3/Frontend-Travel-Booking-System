@@ -1,61 +1,28 @@
 import React, { useState } from "react";
-import "./SearchFlights.css";
-import { getDate } from "./getDate";
+import "../../styles/transport/SearchTransport.css";
+import { getDate } from "../../Utils";
 
 const months = [
-  " Jan",
-  " Feb",
-  " Mar",
-  " Apr",
-  " May",
-  " Jun",
-  " Jul",
-  " Aug",
-  " Sep",
-  " Oct",
-  " Nov",
-  " Dec",
+  " Jan", " Feb", " Mar", " Apr", " May", " Jun", " Jul", " Aug", " Sep", " Oct", " Nov", " Dec"
 ];
 
 const today = getDate(new Date());
 
-const SearchFlights = ({ onSearch }) => {
+const SearchTransport = ({ transportType, onSearch }) => {
   const [state, setState] = useState({
     source: "Delhi",
     destination: "Mumbai",
-    flightClass: "Business",
+    travelClass: "Business",
   });
 
-  // const [getDeparture, setDeparture] = useState({
-  //   min: today.date,
-  //   value: today.date,
-  //   date: Number(today.dd),
-  //   month: months[Number(today.mm) - 1],
-  //   year: `${today.yyyy}`.slice(2, 4),
-  //   day: today.day,
-  // });
-
   const [getDeparture, setDeparture] = useState({
-    min: today.date, // Keep min as today
-    value: "", // Set default date as none
-    date: null, // No default date
+    min: today.date,
+    value: "",
+    date: null,
     month: null,
     year: null,
     day: null,
   });
-
-  // const departureChange = (e) => {
-  //   let date = new Date(e.target.value);
-  //   const currentDate = getDate(date);
-  //   setDeparture({
-  //     ...getDeparture,
-  //     value: currentDate.date,
-  //     date: Number(currentDate.dd),
-  //     month: months[Number(currentDate.mm) - 1],
-  //     year: `${currentDate.yyyy}`.slice(2, 4),
-  //     day: currentDate.day,
-  //   });
-  // };
 
   const departureChange = (e) => {
     let date = new Date(e.target.value);
@@ -75,8 +42,9 @@ const SearchFlights = ({ onSearch }) => {
     onSearch({
       source: state.source,
       destination: state.destination,
-      flightClass: state.flightClass,
+      travelClass: state.travelClass,
       departureDate: getDeparture,
+      transportType,
     });
   };
 
@@ -104,9 +72,7 @@ const SearchFlights = ({ onSearch }) => {
                 id="to"
                 type="text"
                 placeholder="To"
-                onChange={(e) =>
-                  setState({ ...state, destination: e.target.value })
-                }
+                onChange={(e) => setState({ ...state, destination: e.target.value })}
                 value={state.destination}
               />
             </div>
@@ -131,21 +97,17 @@ const SearchFlights = ({ onSearch }) => {
               </nav>
             </div>
 
-            {/*--------------------------------------*/}
             <div className="trip-details-input">
               <label htmlFor="class">Class</label>
               <input
                 autoComplete="off"
-                id="flight-class"
+                id="travel-class"
                 type="text"
-                placeholder="Flight Class"
-                onChange={(e) =>
-                  setState({ ...state, flightClass: e.target.value })
-                }
-                value={state.flightClass}
+                placeholder="Class"
+                onChange={(e) => setState({ ...state, travelClass: e.target.value })}
+                value={state.travelClass}
               />
             </div>
-            {/*--------------------------------------*/}
           </div>
 
           <button type="submit" id="search-btn">
@@ -157,4 +119,4 @@ const SearchFlights = ({ onSearch }) => {
   );
 };
 
-export default SearchFlights;
+export default SearchTransport;

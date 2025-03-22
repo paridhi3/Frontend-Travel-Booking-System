@@ -41,17 +41,24 @@
     /* margin-top: 0; */
 }
 .modal .logOut-modal{
-    font-size: 2.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: red;
+    color: purple;
     text-align: center;
 }
-.modal .checkout-modal{
+
+.modal .checkout-modal {
     font-size: 2.5rem;
     font-weight: bold;
-    color: green;
+    color: purple;
     text-align: center;
 }
+
+.modal .checkout-modal .checkout-modal-text {
+    font-size: 1.5rem;  /* Adjust as needed */
+    font-weight: normal;
+}
+
 .modal .notLogedIn-modal{
     font-size: 2rem;
     font-weight: bold;
@@ -68,7 +75,6 @@
     background-color: green;
 }
 .modal button{
-    height: 2rem;
     width: 8rem;
     outline: none;
     border: none;

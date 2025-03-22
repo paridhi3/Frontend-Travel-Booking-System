@@ -37,9 +37,9 @@ const Header= ()=>{
 
             <div className='pages-link'>
                 {/* <NavLink className={`page-link ${myContext.intoHome && 'active'}`} to={'/flights'}><GiCommercialAirplane /> Flights</NavLink> */}
-                <NavLink className={({ isActive }) => `page-link ${isActive ? 'active' : ''}`} to="/flights"><GiCommercialAirplane /> Flights </NavLink>
-                <NavLink className={'page-link'} to={'/trains'}><FaTrain/> Trains</NavLink>
-                <NavLink className={'page-link'} to={'/buses'}><FaBus/> Buses</NavLink>
+                <NavLink className={({ isActive }) => `page-link ${isActive ? 'active' : ''}`} to="/flight"><GiCommercialAirplane /> Flights </NavLink>
+                <NavLink className={'page-link'} to={'/train'}><FaTrain/> Trains</NavLink>
+                <NavLink className={'page-link'} to={'/bus'}><FaBus/> Buses</NavLink>
             </div>
 
         </div>

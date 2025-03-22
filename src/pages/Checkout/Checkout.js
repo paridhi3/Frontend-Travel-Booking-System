@@ -2,7 +2,10 @@ import "./Checkout.css";
 import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../components/Context/Context";
 import { useLocation, useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 import BookingService from "../../service/BookingService";
+import Modal from "../../components/Modal/Modal";
+import { formatTime, formatDate, capitalizeFullName } from "../../Utils";
 
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -12,29 +15,38 @@ const Checkout = () => {
   const location = useLocation();
   const { state } = location;
 
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const transportDetails = state?.transportDetails;
   const passengerDetails = state?.passengerDetails;
   const seatNumber = state?.seatNumber;
   const travelDate = state?.travelDate;
 
-  console.log("Checkout.js - travelDate:", travelDate);
-
-  // Extract transport type and details dynamically
-  const transportKey = transportDetails
+  const transportKey = transportDetails // transportKey is assigned the first key of transportDetails
     ? Object.keys(transportDetails)[0]
     : null;
-  const extractedDetails = transportKey ? transportDetails[transportKey] : {};
-
-  const transportType =
-    transportKey?.replace("Details", "").toUpperCase() || "UNKNOWN";
-  const transportId =
-    extractedDetails?.flightId ||
-    extractedDetails?.trainId ||
-    extractedDetails?.busId ||
-    "N/A";
+  const transportId = transportKey ? transportDetails[transportKey] : {};
 
   console.log("(Checkout.js) passengerDetails: ", passengerDetails);
   console.log("(Checkout.js) transportDetails: ", transportDetails);
+  console.log("(Checkout.js) travelDate:", travelDate);
+  console.log("(Checkout.js) seatNumber:", seatNumber);
+  console.log("(Checkout.js) transportKey:", transportKey);
+  console.log("(Checkout.js) transportId:", transportId);
+
+  // const transportType = transportKey?.replace("Details", "").toUpperCase() || "UNKNOWN";
+  const transportType = 
+    "flightId" in transportDetails ? "FLIGHT" :
+    "trainId" in transportDetails ? "TRAIN" :
+    "busId" in transportDetails ? "BUS" :
+    "UNKNOWN";
+  // const transportId =
+  //   extractedDetails?.flightId ||
+  //   extractedDetails?.trainId ||
+  //   extractedDetails?.busId ||
+  //   "N/A";
+  
+  console.log("(Checkout.js) transportType:", transportType);
+  console.log("(Checkout.js) transportId:", transportId);
 
   const [formState, setFormState] = useState({
     cardNumber: "",
@@ -63,21 +75,9 @@ const Checkout = () => {
     });
   };
 
-  const capitalizeFullName = (name) => {
-    if (!name) return "";
-    return name
-      .toLowerCase()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
-  //   const formSubmit = (e) => {
-  //     e.preventDefault();
-  //     myContext.displayPortal(true);
-  //   };
   const formSubmit = async (e) => {
     e.preventDefault();
+    myContext.displayPortal(true);
 
     try {
       // Prepare booking details
@@ -106,37 +106,11 @@ const Checkout = () => {
         return;
       }
 
-      alert(`Your ${transportType} has been booked successfully!`);
-
-
-      // Show confirmation modal
-      myContext.displayPortal(true);
-      navigate("/", { replace: true });
-
+      myContext.displayPortal(false);
+      setShowCheckoutModal(true);
     } catch (error) {
       console.error("Error during booking/payment:", error);
     }
-  };
-
-  // **Convert travelDate to readable format**
-  const formatDate = (dateString) => {
-    if (!dateString) return "Not Provided";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
-
-  // Convert timestamps to HH:mm format
-  const formatTime = (timeRaw) => {
-    return timeRaw.includes("T")
-      ? new Date(timeRaw).toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : timeRaw.slice(0, 5);
   };
 
   return (
@@ -155,19 +129,19 @@ const Checkout = () => {
           </div>
           <div>
             <span className="journey-label">Source</span>
-            <span>{extractedDetails?.source}</span>
+            <span>{transportDetails?.source}</span>
           </div>
           <div>
             <span className="journey-label">Destination</span>
-            <span>{extractedDetails?.destination}</span>
+            <span>{transportDetails?.destination}</span>
           </div>
           <div>
             <span className="journey-label">Departure Time</span>
-            <span>{formatTime(extractedDetails?.departureTime)}</span>
+            <span>{formatTime(transportDetails?.departureTime)}</span>
           </div>
           <div>
             <span className="journey-label">Arrival Time</span>
-            <span>{formatTime(extractedDetails?.arrivalTime)}</span>
+            <span>{formatTime(transportDetails?.arrivalTime)}</span>
           </div>
           <div>
             <span className="journey-label">Travel Date</span>
@@ -187,7 +161,7 @@ const Checkout = () => {
           </div>
           <div className="total-amount">
             <span>Total Amount</span>
-            <span>₹ {extractedDetails.price.toLocaleString("en-IN")}</span>
+            <span>₹ {transportDetails.price.toLocaleString("en-IN")}</span>
           </div>
         </section>
 
@@ -234,6 +208,18 @@ const Checkout = () => {
             <button id="pay" type="submit">
               Pay
             </button>
+
+            {showCheckoutModal &&
+              createPortal(
+                <Modal
+                  type="checkout"
+                  onClose={() => {
+                    setShowCheckoutModal(false);
+                    navigate("/", { replace: true }); // Only navigate when user clicks
+                  }}
+                />,
+                document.getElementById("portal")
+              )}
           </form>
         </section>
       </div>
