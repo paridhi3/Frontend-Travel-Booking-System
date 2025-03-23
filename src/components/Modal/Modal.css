@@ -27,7 +27,6 @@
     font-size: 2.5rem;
     font-weight: bold;
     font-family: 'Poppins';
-    color: purple;
 }
 .modal .logIn-modal-head{
     margin: auto;
@@ -43,14 +42,12 @@
 .modal .logOut-modal{
     font-size: 1.2rem;
     font-weight: bold;
-    color: purple;
     text-align: center;
 }
 
 .modal .checkout-modal {
     font-size: 2.5rem;
     font-weight: bold;
-    color: purple;
     text-align: center;
 }
 

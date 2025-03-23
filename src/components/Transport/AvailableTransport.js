@@ -71,7 +71,7 @@ const AvailableTransport = () => {
       if (isDepartedToday) {
         setAvailability({
           occupiedSeats: "ALL",
-          message: "This transport has departed today. Please choose another date.",
+          // message: `This ${transportType} has departed today. Please choose another date.`,
         });
         return;
       }
@@ -99,7 +99,7 @@ const AvailableTransport = () => {
     handleCheckAvailability();
   }, [handleCheckAvailability]);
 
-  const handleBooking = async (seatNumber) => { // selects a seat
+  const handleBooking = async (seatNumber) => { // selects a seat (does not book)
     try {
       setAvailability((prev) => ({
         ...prev,
@@ -118,7 +118,8 @@ const AvailableTransport = () => {
       <HorizontalDatePicker onSelectDate={handleDateSelection} />
 
       {availability.occupiedSeats === "ALL" ? (
-        <p className="departed-message">{availability.message}</p>
+        // <p className="departed-message">{availability.message}</p>
+        <p style={{ color: "gray", fontWeight: "bold", textAlign: "center" }}>This {transportType} has departed today. Please choose another date.</p>
       ) : (
         SeatPickerComponent && (
           <SeatPickerComponent
@@ -131,7 +132,7 @@ const AvailableTransport = () => {
         )
       )}
 
-      {error && <p className="departed-message">{error}</p>}
+      {error && <p style={{ color: "gray", fontWeight: "bold", textAlign: "center" }}>{error}</p>}
     </div>
   );
 };

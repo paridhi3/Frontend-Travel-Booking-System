@@ -5,6 +5,7 @@ const MyContext = createContext();
 
 const ContextProvider = (props) => {
     const [intoHome, setIntoHome] = useState(false);
+
     const onHomePage = (value) => {
         setIntoHome(value);
     };
@@ -25,6 +26,12 @@ const ContextProvider = (props) => {
         if (storedUser && isLoggedIn) {
             setCurrUser(JSON.parse(storedUser));
             setLoggedIn(true);
+        } else {
+            // ✅ Ensure currUser is reset if not logged in
+            setCurrUser({});
+            setLoggedIn(false);
+            localStorage.removeItem("loggedInUser"); // ✅ Clear stale user data
+            localStorage.removeItem("isLoggedIn");   // ✅ Clear login state
         }
     }, []);
 

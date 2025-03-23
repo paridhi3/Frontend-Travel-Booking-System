@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { MyContext } from "../Context/Context";
 import { createPortal } from "react-dom";
 import Modal from "../../components/Modal/Modal";
-import { formatTime,calculateDuration } from "../../Utils";
+import { formatTime, calculateDuration } from "../../Utils";
 
 const FetchTransport = ({ transport, transportType }) => {
   console.log(
@@ -43,9 +43,13 @@ const FetchTransport = ({ transport, transportType }) => {
   const transportClass = transport[classLabel];
 
   const checkAvailabilityClicked = () => {
-    if (!myContext.currUser.email) {
-      myContext.displayPortal(true);
-      return;
+
+    const storedPassenger = localStorage.getItem("loggedInUser");
+
+    if (!storedPassenger) {
+        console.log("🚨 User is not logged in.");
+        myContext.displayPortal(true);
+        return;
     }
 
     console.log("🚀 Navigating to:", `/${transportType}/${id}`);

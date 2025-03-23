@@ -10,7 +10,7 @@
   }
   
   /* Airplane Body */
-  .airplane-body {
+  .transport-body {
     display: flex;
     justify-content: center;
     align-items: center;

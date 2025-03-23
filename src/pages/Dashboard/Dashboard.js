@@ -4,6 +4,7 @@ import { MyContext } from '../../components/Context/Context';
 import Modal from '../../components/Modal/Modal';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
+import { capitalizeFullName } from '../../Utils';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -17,19 +18,27 @@ const Dashboard = () => {
         }
     }, [myContext, navigate]);
 
-    const signOutClicked = () => {
-        myContext.loggedInSetter(false);
-        myContext.addCurrUser({
-            name: '',
-            email: '',
-            password: '',
-        });
-        myContext.displayPortal(true);
-    };
+    // const signOutClicked = () => {
+    //     myContext.loggedInSetter(false);
+    //     myContext.addCurrUser({
+    //         name: '',
+    //         email: '',
+    //         password: '',
+    //     });
+    //     myContext.displayPortal(true);
+    // };
 
-    const toTitleCase = (str) => {
-        return str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase());    
-    }
+    const signOutClicked = () => {
+        myContext.loggedInSetter(false); // Update login state
+        myContext.addCurrUser({}); // Reset user state
+    
+        // ✅ Completely clear user data from localStorage
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("isLoggedIn");
+    
+        myContext.displayPortal(true); // Show logout modal
+    };
+    
 
     return (
         <div className="dashboard-container">
@@ -40,10 +49,11 @@ const Dashboard = () => {
                         alt="Profile" 
                     />
                     {/* <br /> */}
-                    <p><span id="name">{myContext.currUser?.fullName ? toTitleCase(myContext.currUser.fullName) : 'Guest'}</span></p>
+                    <p><span id="name">{myContext.currUser?.fullName ? capitalizeFullName(myContext.currUser.fullName) : 'Guest'}</span></p>
                     <button onClick={signOutClicked}>Sign Out</button>
                 </div>
                 <div className="right-side">
+                    <p>Name: <span id="name">{capitalizeFullName(myContext.currUser.fullName)}</span></p>
                     <p>Email ID: <span id="email">{myContext.currUser.email}</span></p>
                     <p>Contact: <span id="contact">{myContext.currUser.contact}</span></p>
                     <p>Gender: <span id="gender">{myContext.currUser.gender}</span></p>

@@ -2,6 +2,7 @@ import "./Modal.css";
 import React, { useContext } from "react";
 import { MyContext } from "../Context/Context";
 import { useNavigate } from "react-router-dom";
+import { capitalizeFullName } from "../../Utils";
 
 const Modal = ({ type }) => {
   const myContext = useContext(MyContext);
@@ -18,13 +19,6 @@ const Modal = ({ type }) => {
     navigate("/login");
   };
 
-  const toTitleCase = (str) => {
-    return str.replace(
-      /\w\S*/g,
-      (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
-    );
-  };
-
   return (
     <div onClick={portalClose} className="modal-container">
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -34,7 +28,7 @@ const Modal = ({ type }) => {
               Hi{" "}
               <span>
                 {myContext.currUser?.fullName
-                  ? toTitleCase(myContext.currUser.fullName.split(" ")[0])
+                  ? capitalizeFullName(myContext.currUser.fullName.split(" ")[0])
                   : "Guest"}
               </span>
             </nav>
