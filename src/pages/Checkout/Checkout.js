@@ -171,6 +171,7 @@ const Checkout = () => {
           <form onSubmit={formSubmit}>
             <label htmlFor="name">Name on Card</label>
             <input
+              className="checkout-input"
               id="name"
               type="text"
               required
@@ -180,6 +181,7 @@ const Checkout = () => {
 
             <label htmlFor="card-number">Card Number</label>
             <input
+              className="checkout-input"
               id="card-number"
               name="cardNumber"
               type="text"
@@ -191,10 +193,11 @@ const Checkout = () => {
             />
 
             <label htmlFor="expiry-date">Expiry Date</label>
-            <input id="expiry-date" type="month" required />
+            <input className="checkout-input" id="expiry-date" type="month" required />
 
             <label htmlFor="cvv">CVV</label>
             <input
+              className="checkout-input"
               id="cvv"
               name="cvv"
               type="text"

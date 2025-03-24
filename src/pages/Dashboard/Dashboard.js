@@ -13,31 +13,17 @@ const Dashboard = () => {
     useEffect(() => {
         myContext.onHomePage(false);
         
-        if (!myContext?.currUser?.email) {
-            navigate('/');
-        }
+        // if (!myContext?.currUser?.email) {
+        //     navigate('/');
+        // }
     }, [myContext, navigate]);
 
-    // const signOutClicked = () => {
-    //     myContext.loggedInSetter(false);
-    //     myContext.addCurrUser({
-    //         name: '',
-    //         email: '',
-    //         password: '',
-    //     });
-    //     myContext.displayPortal(true);
-    // };
-
     const signOutClicked = () => {
-        myContext.loggedInSetter(false); // Update login state
+        myContext.logoutUser(); // Use logout function from context
         myContext.addCurrUser({}); // Reset user state
-    
-        // ✅ Completely clear user data from localStorage
-        localStorage.removeItem("loggedInUser");
-        localStorage.removeItem("isLoggedIn");
-    
         myContext.displayPortal(true); // Show logout modal
-    };
+    };    
+    
     
 
     return (

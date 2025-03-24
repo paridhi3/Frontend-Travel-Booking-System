@@ -12,13 +12,14 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 // import AvailableTrains from "./components/Trains/AvailableTrains/AvailableTrains";
 // import Buses from "./components/Buses/Buses/Buses";
 // import AvailableBuses from "./components/Buses/AvailableBuses/AvailableBuses";
-import Admin from "./components/Admin/Admin";
+// import Admin from "./components/Admin/Admin";
 import Transport from "./components/Transport/Transport";
 import AvailableTransport from "./components/Transport/AvailableTransport";
 import "./styles/App.css";
 import Register from "./pages/Register/Register";
 import Checkout from "./pages/Checkout/Checkout";
 import NotFound from "./pages/Not Found/NotFound";
+import AdminLogIn from "./components/Admin/AdminLogin";
 
 function App() {
 
@@ -41,7 +42,7 @@ function App() {
           {/* <Route path="/" element={<Navigate to="/flight" />} /> */}
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/admin' element={<Admin />} />
+          <Route path='/adminLogin' element={<AdminLogIn />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path="/:transportType" element={<Transport />} />
           <Route path="/:transportType/:transportId" element={<AvailableTransport />} />

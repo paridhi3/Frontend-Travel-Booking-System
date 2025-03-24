@@ -52,9 +52,11 @@
   text-transform: uppercase;
 }
 
-/* Disabled Dates */
+
 .date-item.disabled {
-  /* background-color: #f0f0f0; */
-  color: #aaa;
+  color: gray;
   cursor: not-allowed;
+  opacity: 0.5;
+  transform: none !important; 
 }
+

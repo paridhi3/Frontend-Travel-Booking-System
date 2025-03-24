@@ -64,7 +64,7 @@ label {
   display: block;
 }
 
-input {
+.checkout-input {
   width: calc(100% - 16px);
   padding: 12px;
   margin-bottom: 1rem;

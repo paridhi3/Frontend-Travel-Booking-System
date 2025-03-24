@@ -118,49 +118,47 @@ const Register = () => {
                 {success && <h2 style={{color: 'green'}}>Register Successful. Go to <Link to={'/login'}>Log In.</Link></h2>}
                 {!uniqueUser && <h3 style={{color:'red'}}>! This Email is already taken. Try another.</h3>}
 
-                <input name='name' type='text' onChange={inputHandler} value={state.name} placeholder='Full Name*' required />
+                <input className='register-input' name='name' type='text' onChange={inputHandler} value={state.name} placeholder='Full Name*' required />
                 {invalidName && <span style={{color:'red'}}>Please enter your full name (first & last name), ex. John Doe</span>}
 
-                <input name='email' type='email' onChange={inputHandler} value={state.email} placeholder='Email*' required />
+                <input className='register-input' name='email' type='email' onChange={inputHandler} value={state.email} placeholder='Email*' required />
 
                 {/* <input name='password' type={showPassword ? "text" : "password"} onChange={inputHandler} value={state.password} placeholder='Password*' required /> */}
                 <div className="password-container">
                     <input
+                        className='register-input'
                         name="password"
                         type={showPassword ? "text" : "password"}
                         onChange={inputHandler}
                         value={state.password}
                         placeholder="Password*"
                         required
-                        className="password-input"
                     />
                     <img
                         src={showPassword ? showPwIcon : hidePwIcon}
                         alt="Toggle Password"
-                        className="toggle-password-icon"
+                        className="toggle-password-icon-register"
                         onClick={() => setShowPassword(!showPassword)}
                     />
                 </div>
                 {/* {invalidPassword && <span style={{color:'red'}}>Password must be at least 8 characters, with a symbol, uppercase & lowercase letter, and a number</span>} */}
 
-                {/* <input name='gender' type='text' onChange={inputHandler} value={state.gender} placeholder='Gender*' required /> */}
                 <select 
                     name="gender" 
                     onChange={inputHandler} 
                     value={state.gender} 
                     required 
-                    className="gender-select"
+                    className="register-input"
                 >
                     <option value="" disabled>Gender*</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="Other">Other</option>
                 </select>
 
-                <input name='age' type='number' onChange={inputHandler} value={state.age} placeholder='Age*' required />
+                <input className='register-input' name='age' type='number' onChange={inputHandler} value={state.age} placeholder='Age*' required />
                 {invalidAge && <span style={{color:'red'}}>Age should be 18 or greater.</span>}
 
-                <input name='contact' type='text' onChange={inputHandler} value={state.contact} placeholder='Contact*' required />
+                <input className='register-input' name='contact' type='text' onChange={inputHandler} value={state.contact} placeholder='Contact*' required />
                 {invalidContact && <span style={{color:'red'}}>Contact must contain 10 digits.</span>}
 
                 <button type='submit' id="submit">Register</button>
