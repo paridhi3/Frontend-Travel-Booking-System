@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ContextProvider } from "./components/Context/Context";
+import "./components/Admin/AdminPage.css";
 import "./styles/index.css"; // Ensure this file exists
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

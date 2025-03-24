@@ -13,7 +13,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 // import Buses from "./components/Buses/Buses/Buses";
 // import AvailableBuses from "./components/Buses/AvailableBuses/AvailableBuses";
 // import Admin from "./components/Admin/Admin";
-import AdminPage from "./components/Admin/AdminPage"
+import AdminPage from "./components/Admin/AdminPage";
 import Transport from "./components/Transport/Transport";
 import AvailableTransport from "./components/Transport/AvailableTransport";
 import "./styles/App.css";
@@ -23,7 +23,6 @@ import NotFound from "./pages/Not Found/NotFound";
 import AdminLogIn from "./components/Admin/AdminLogin";
 
 function App() {
-
   // const [fixedHeader, setFixedHeader] = useState(false);
   // window.addEventListener('scroll', ()=>{
   //   if(window.pageYOffset>72){ // 72 means 72px(or 4.5rem)
@@ -38,16 +37,22 @@ function App() {
       {/* {fixedHeader? <Header2 />: <Header /> } */}
       <Header />
       <div id="main">
-      <Routes>
-          <Route path='/' element={<Transport />} />
+        <Routes>
+          <Route path="/" element={<Transport />} />
           {/* <Route path="/" element={<Navigate to="/flight" />} /> */}
-          <Route path='/login' element={<LogIn />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/adminLogin' element={<AdminLogIn />} />
-          <Route path='/adminPage' element={<AdminPage />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/adminLogin" element={<AdminLogIn />} />
+          <Route path="/adminPage" element={<AdminPage />} />
+          <Route path="/manageFlight" element={<AdminPage />} />
+          <Route path="/manageTrain" element={<AdminPage />} />
+          <Route path="/manageBus" element={<AdminPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/:transportType" element={<Transport />} />
-          <Route path="/:transportType/:transportId" element={<AvailableTransport />} />
+          <Route
+            path="/:transportType/:transportId"
+            element={<AvailableTransport />}
+          />
           {/* <Route path="/:mainType/:transportType/:transportId" element={<AvailableTransport />} /> */}
           {/* <Route path='/flights' element={<Flights />} /> */}
           {/* <Route path="/flight/:transportType/:transportId" element={<AvailableFlights />} /> */}
@@ -55,8 +60,8 @@ function App() {
           {/* <Route path="/bus/:transportType/:transportId" element={<AvailableBuses />} /> */}
           {/* <Route path='/trains' element={<Trains />} /> */}
           {/* <Route path="/train/:transportType/:transportId" element={<AvailableTrains />} /> */}
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='*' element={<NotFound/>} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer />

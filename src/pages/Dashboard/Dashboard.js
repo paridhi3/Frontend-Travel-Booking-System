@@ -30,38 +30,6 @@ const Dashboard = () => {
     myContext.displayPortal(false); // Reset portal view when the dashboard loads
   }, [myContext, navigate]);
 
-  //   const signOutClicked = () => {
-  //     if (currLoggedIn === myContext.currUser) {
-  //       myContext.logoutUser(); // Use logout function from context
-  //       myContext.addCurrUser({}); // Reset user state
-  //       myContext.displayPortal(true); // Show logout modal
-  //     } else {
-  //       myContext.logoutAdmin(); // Use logout function from context
-  //       myContext.addCurrAdmin({}); // Reset admin state
-  //       myContext.displayPortal(true); // Show logout modal
-  //     }
-  //   };
-
-//   const signOutClicked = () => {
-//     if (myContext.currUser && Object.keys(myContext.currUser).length > 0) {
-//       myContext.logoutUser();
-//       myContext.addCurrUser(null);
-//       myContext.displayPortal(true);
-//     } else if (
-//       myContext.currAdmin &&
-//       Object.keys(myContext.currAdmin).length > 0
-//     ) {
-//       myContext.logoutAdmin();
-//       myContext.addCurrAdmin(null);
-//       myContext.displayPortal(true);
-//     }
-//     // setTimeout(() => myContext.displayPortal(false), 2000);
-//     // setTimeout(() => {
-//     //     myContext.displayPortal(false);
-//     //     navigate("/"); // Redirect to login after logout
-//     //   }, 2000);
-//   };
-
 const signOutClicked = () => {
     if (myContext.currUser && Object.keys(myContext.currUser).length > 0) {
       myContext.logoutUser();
