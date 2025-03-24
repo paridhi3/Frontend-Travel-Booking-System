@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 // import Buses from "./components/Buses/Buses/Buses";
 // import AvailableBuses from "./components/Buses/AvailableBuses/AvailableBuses";
 // import Admin from "./components/Admin/Admin";
+import AdminPage from "./components/Admin/AdminPage"
 import Transport from "./components/Transport/Transport";
 import AvailableTransport from "./components/Transport/AvailableTransport";
 import "./styles/App.css";
@@ -43,6 +44,7 @@ function App() {
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
           <Route path='/adminLogin' element={<AdminLogIn />} />
+          <Route path='/adminPage' element={<AdminPage />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path="/:transportType" element={<Transport />} />
           <Route path="/:transportType/:transportId" element={<AvailableTransport />} />

@@ -22,6 +22,7 @@ const Modal = ({ type }) => {
   return (
     <div onClick={portalClose} className="modal-container">
       <div className="modal" onClick={(e) => e.stopPropagation()}>
+        
         {type === "logIn" && (
           <>
             <nav className="logIn-modal-head">
