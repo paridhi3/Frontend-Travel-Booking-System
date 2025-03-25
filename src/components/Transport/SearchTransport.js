@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/transport/SearchTransport.css";
-import { capitalizeFullName, getDate } from "../../Utils";
+import { getDate } from "../../Utils";
 
 const months = [
   " Jan",
@@ -135,20 +135,6 @@ const SearchTransport = ({ transportType, onSearch }) => {
                 />
               </nav>
             </div>
-
-            {/* <div className="trip-details-input">
-              <label htmlFor="class">Class</label>
-              <input
-                autoComplete="off"
-                id="travel-class"
-                type="text"
-                placeholder="Class"
-                onChange={(e) =>
-                  setState({ ...state, travelClass: e.target.value })
-                }
-                value={state.travelClass}
-              />
-            </div> */}
 
             <div
               className="trip-details-input"
