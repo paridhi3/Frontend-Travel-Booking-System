@@ -1,19 +1,53 @@
 import React, { useState } from "react";
 import "../../styles/transport/SearchTransport.css";
-import { getDate } from "../../Utils";
+import { capitalizeFullName, getDate } from "../../Utils";
 
 const months = [
-  " Jan", " Feb", " Mar", " Apr", " May", " Jun", " Jul", " Aug", " Sep", " Oct", " Nov", " Dec"
+  " Jan",
+  " Feb",
+  " Mar",
+  " Apr",
+  " May",
+  " Jun",
+  " Jul",
+  " Aug",
+  " Sep",
+  " Oct",
+  " Nov",
+  " Dec",
 ];
 
 const today = getDate(new Date());
 
 const SearchTransport = ({ transportType, onSearch }) => {
-  const [state, setState] = useState({
-    source: "Delhi",
-    destination: "Mumbai",
-    travelClass: "Business",
-  });
+  const initialState = () => {
+    if (transportType === "flight") {
+      return {
+        source: "Delhi",
+        destination: "Mumbai",
+        travelClass: "Business",
+      };
+    } else if (transportType === "train") {
+      return { source: "Delhi", destination: "Mumbai", travelClass: "General" };
+    } else if (transportType === "bus") {
+      return { source: "Delhi", destination: "Mumbai", travelClass: "AC" };
+    }
+    return { source: "", destination: "", travelClass: "" }; // Default fallback
+  };
+
+  const [state, setState] = useState(initialState);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const classOptions = {
+    flight: ["BUSINESS", "ECONOMY", "FIRST_CLASS"],
+    train: ["FIRST_CLASS", "GENERAL", "SECOND_CLASS", "SLEEPER"],
+    bus: ["AC", "NON_AC", "SEATER", "SEMI_SLEEPER", "SLEEPER"],
+  };
+
+  const handleSelect = (selectedClass) => {
+    setState({ ...state, travelClass: selectedClass });
+    setIsMenuOpen(false);
+  };
 
   const [getDeparture, setDeparture] = useState({
     min: today.date,
@@ -72,7 +106,9 @@ const SearchTransport = ({ transportType, onSearch }) => {
                 id="to"
                 type="text"
                 placeholder="To"
-                onChange={(e) => setState({ ...state, destination: e.target.value })}
+                onChange={(e) =>
+                  setState({ ...state, destination: e.target.value })
+                }
                 value={state.destination}
               />
             </div>
@@ -82,10 +118,13 @@ const SearchTransport = ({ transportType, onSearch }) => {
               <nav className="departure-display">
                 <p>
                   <span>{getDeparture.date}</span>
-                  {getDeparture.month}'{getDeparture.year}
+                  {getDeparture.month}
+                  {getDeparture.date ? "'" : ""}
+                  {getDeparture.year}
                   <br />
                   {getDeparture.day}
                 </p>
+
                 <input
                   autoComplete="off"
                   id="departure"
@@ -97,17 +136,57 @@ const SearchTransport = ({ transportType, onSearch }) => {
               </nav>
             </div>
 
-            <div className="trip-details-input">
+            {/* <div className="trip-details-input">
               <label htmlFor="class">Class</label>
               <input
                 autoComplete="off"
                 id="travel-class"
                 type="text"
                 placeholder="Class"
-                onChange={(e) => setState({ ...state, travelClass: e.target.value })}
+                onChange={(e) =>
+                  setState({ ...state, travelClass: e.target.value })
+                }
                 value={state.travelClass}
               />
+            </div> */}
+
+            <div
+              className="trip-details-input"
+              style={{ position: "relative" }}
+            >
+              <label htmlFor="class">Class</label>
+              <div
+                className="selected-class"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {state.travelClass || "Select Class"}
+              </div>
+
+              {isMenuOpen && (
+                <div className="context-menu open">
+                  {classOptions[transportType]?.map((option) => (
+                    <div
+                      key={option}
+                      onClick={() => handleSelect(option)}
+                      style={{
+                        padding: "8px",
+                        cursor: "pointer",
+                        borderBottom: "1px solid #ddd",
+                        background: "#fff",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.background = "#f0f0f0")
+                      }
+                      onMouseLeave={(e) => (e.target.style.background = "#fff")}
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+
           </div>
 
           <button type="submit" id="search-btn">

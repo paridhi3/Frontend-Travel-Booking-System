@@ -14,12 +14,12 @@
 //   const { transportType } = useParams(); // Get type from URL
 //   const type = transportType || "flight"; // Default to flights if transportType is not set
 
-//   const transportClass = type === "flight" 
-//     ? "flightClass" 
-//     : type === "bus" 
-//     ? "busClass" 
-//     : type === "train" 
-//     ? "trainClass" 
+//   const transportClass = type === "flight"
+//     ? "flightClass"
+//     : type === "bus"
+//     ? "busClass"
+//     : type === "train"
+//     ? "trainClass"
 //     : null;
 
 //   const myContext = useContext(MyContext);
@@ -70,7 +70,7 @@
 
 //       console.log("(fetchTransportData) Response Data:", response.data);
 //       setAllTransports(response.data);
-//       setTransports(response.data); 
+//       setTransports(response.data);
 
 //       setTimeout(() => {
 //         setLoader(false);
@@ -105,7 +105,7 @@
 //   }, [type, fetchAvailability]);
 
 //   useEffect(() => {
-//     console.log("(fetchTransportData) allTransports after update:", allTransports); 
+//     console.log("(fetchTransportData) allTransports after update:", allTransports);
 //   }, [allTransports]);
 
 //   // **Filtering Logic**
@@ -163,7 +163,7 @@
 
 //   const headingLabel = type === "flight" ? "Flights" : type === "train" ? "Trains" : "Buses";
 
-//   console.log("(Debug) allTransports:", allTransports); 
+//   console.log("(Debug) allTransports:", allTransports);
 //   console.log("(Debug) transports:", transports);
 //   console.log("(Debug) isSearchClicked:", isSearchClicked);
 //   console.log("(Debug) availability:", availability);
@@ -232,19 +232,25 @@ const Transport = () => {
     departureDate: "",
   });
 
-  const transportClass =
+  const transportClassKey =
     type === "flight"
       ? "flightClass"
-      : type === "bus"
-      ? "busClass"
       : type === "train"
       ? "trainClass"
-      : null;
+      : "busClass";
+
+  const transportIdKey =
+    type === "flight" ? "flightId" : type === "train" ? "trainId" : "busId";
 
   const handleSearch = (filters) => {
     setSearchFilters(filters);
     setIsSearchClicked(true);
   };
+
+  useEffect(() => {
+    console.log("Type changed: ", type);
+    setIsSearchClicked(false);
+  }, [type]);
 
   const fetchTransportData = useCallback(async () => {
     setLoader(true);
@@ -316,8 +322,8 @@ const Transport = () => {
 
   // **Filtering Logic**
   useEffect(() => {
-    console.log("(Filtering) isSearchClicked:", isSearchClicked); // correct when !isSearchClicked
-    console.log("(Filtering) allTransports:", allTransports); // correct when !isSearchClicked
+    console.log("(Filtering) isSearchClicked:", isSearchClicked);
+    console.log("(Filtering) allTransports:", allTransports);
 
     const { source, destination, travelClass, departureDate } = searchFilters;
 
@@ -330,12 +336,49 @@ const Transport = () => {
       return;
     }
 
-    const filteredTransports = allTransports.filter(
-      (transport) =>
-        transport.source === searchFilters[source] &&
-        transport.destination === searchFilters[destination] &&
-        transport[transportClass] === searchFilters[travelClass]
-    );
+    // const filteredTransports = allTransports.filter(
+    //   (transport) =>
+    //     transport[source] === searchFilters.source &&
+    //     transport[destination] === searchFilters.destination &&
+    //     // transport[transportClass] === searchFilters[travelClass]
+    //     transport[travelClass] === searchFilters[travelClass]
+    // );
+
+    const filteredTransports = allTransports.filter((transport) => {
+      const transportSource = transport.source?.trim().toLowerCase() || "";
+      const transportDestination =
+        transport.destination?.trim().toLowerCase() || "";
+      const transportClass =
+        transport[transportClassKey]?.trim().toLowerCase() || "";
+
+      const matchesSource =
+        source.trim() === "" || transportSource === source.trim().toLowerCase();
+      const matchesDestination =
+        destination.trim() === "" ||
+        transportDestination === destination.trim().toLowerCase();
+      const matchesTravelClass =
+        travelClass.trim() === "" ||
+        transportClass === travelClass.trim().toLowerCase();
+
+      // Check availability on selected departure date
+      let matchesDepartureDate = true;
+      const formattedDepartureDate = departureDate?.value ?? "";
+
+      if (formattedDepartureDate !== "") {
+        matchesDepartureDate = availability.some(
+          (avail) =>
+            avail.transportId === transport[transportIdKey] &&
+            avail.travelDate === formattedDepartureDate
+        );
+      }
+
+      return (
+        matchesSource &&
+        matchesDestination &&
+        matchesTravelClass &&
+        matchesDepartureDate
+      );
+    });
 
     if (isSearchClicked) {
       setTransports(filteredTransports);
@@ -343,13 +386,7 @@ const Transport = () => {
     }
 
     console.log("(Filtering) Final Filtered Transports:", filteredTransports);
-  }, [
-    searchFilters,
-    allTransports,
-    availability,
-    isSearchClicked,
-    transportClass,
-  ]);
+  }, [searchFilters, allTransports, availability, isSearchClicked]);
 
   const headingLabel =
     type === "flight" ? "Flights" : type === "train" ? "Trains" : "Buses";
@@ -358,7 +395,10 @@ const Transport = () => {
   console.log("(Debug) transports:", transports);
   console.log("(Debug) isSearchClicked:", isSearchClicked);
   console.log("(Debug) availability:", availability);
-  console.log("(Debug) Transport Objects:", JSON.stringify(transports, null, 2));
+  console.log(
+    "(Debug) Transport Objects:",
+    JSON.stringify(transports, null, 2)
+  );
 
   return (
     <div className="transport">
