@@ -88,6 +88,13 @@
     color: blueviolet;
 }
 
+.admin-login-form .password-container{
+    margin-left: 1.5rem;
+    position: relative;
+    align-items: center;
+    display: flex;
+}
+
 .password-input {
     width: 100%;
     padding: 10px 40px 10px 10px; /* Extra space for the icon */

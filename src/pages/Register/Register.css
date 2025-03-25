@@ -72,6 +72,13 @@
     border: 2px rgba(0, 204, 255, 0.774) solid;
 }
 
+.register .password-container{
+    margin-left: 1.5rem;
+    position: relative;
+    align-items: center;
+    display: flex;
+}
+
 .register #submit{
     width: 20rem;
     box-sizing: border-box;

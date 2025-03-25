@@ -54,6 +54,13 @@
     border: 2px rgba(0, 204, 255, 0.774) solid;
 }
 
+.login-form .password-container{
+    margin-left: 1.5rem;
+    position: relative;
+    align-items: center;
+    display: flex;
+}
+
 .login-form #submit{
     width: 20rem;
     box-sizing: border-box;
@@ -89,6 +96,7 @@
 }
 
 .password-input {
+    margin-left: 0;
     width: 100%;
     padding: 10px 40px 10px 10px; /* Extra space for the icon */
     border: 1px solid #ccc;
