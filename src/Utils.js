@@ -57,6 +57,19 @@ export const formatTime = (timeRaw) => {
     : timeRaw.slice(0, 5);
 };
 
+export const formatDateTime = (dateString) => {
+  if (!dateString) return "Not Provided";
+  const date = new Date(dateString);
+  return date.toLocaleString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
+
 export const getDate = (newDate) => {
   let date = newDate;
   let day = days[date.getDay()];

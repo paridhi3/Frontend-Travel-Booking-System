@@ -21,20 +21,12 @@ import Register from "./pages/Register/Register";
 import Checkout from "./pages/Checkout/Checkout";
 import NotFound from "./pages/Not Found/NotFound";
 import AdminLogIn from "./components/Admin/AdminLogin";
+import AdminViewBookings from "./components/Admin/AdminViewBookings";
+import BookingHistory from "./pages/BookingHistory/BookingHistory";
 
 function App() {
-  // const [fixedHeader, setFixedHeader] = useState(false);
-  // window.addEventListener('scroll', ()=>{
-  //   if(window.pageYOffset>72){ // 72 means 72px(or 4.5rem)
-  //     setFixedHeader(true);
-  //   }else{
-  //     setFixedHeader(false);
-  //   }
-  // })
-
   return (
     <ContextProvider>
-      {/* {fixedHeader? <Header2 />: <Header /> } */}
       <Header />
       <div id="main">
         <Routes>
@@ -44,10 +36,12 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/adminLogin" element={<AdminLogIn />} />
           <Route path="/adminPage" element={<AdminPage />} />
+          <Route path="/adminViewBookings" element={<AdminViewBookings />} />
           <Route path="/manageFlight" element={<AdminPage />} />
           <Route path="/manageTrain" element={<AdminPage />} />
           <Route path="/manageBus" element={<AdminPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/bookingHistory" element={<BookingHistory />} />
           <Route path="/:transportType" element={<Transport />} />
           <Route
             path="/:transportType/:transportId"

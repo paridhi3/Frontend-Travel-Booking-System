@@ -20,6 +20,7 @@
   display: flex-row;
   justify-content: center;
   position: relative;
+  text-align: center;
 }
 .admin-content-form {
   display: flex;
@@ -294,4 +295,17 @@ table .delete-button:hover {
 
 table .update-button:hover {
   background-color: black;
+}
+
+.admin-view-bookings {
+  width: fit-content;
+  padding: 10px;
+  background-color: #dc3545;
+  color: white;
+  font-family: 'Poppins';
+  font-weight: bold;
+  margin: auto;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
 }

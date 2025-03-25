@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
 import FlightService from "../../service/FlightService";
 import TrainService from "../../service/TrainService";
 import BusService from "../../service/BusService";
+import BookingService from "../../service/BookingService";
 import { capitalizeFullName } from "../../Utils.js";
 
 const AdminPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedAction, setSelectedAction] = useState(null);
   const [selectedMode, setSelectedMode] = useState("flight"); // Default mode
   const [items, setItems] = useState([]); // Holds flights, trains, or buses
@@ -33,28 +36,6 @@ const AdminPage = () => {
       setSelectedMode("bus");
     }
   }, [location.pathname]);
-
-  // const fetchData = async () => {
-  //   try {
-  //     let response;
-  //     if (selectedMode === "flight") {
-  //       response = await FlightService.getAllFlights();
-  //     } else if (selectedMode === "train") {
-  //       response = await TrainService.getAllTrains();
-  //     } else {
-  //       response = await BusService.getAllBuses();
-  //     }
-  //     console.log("(AdminPage.js - fetchData) response.data: ", response.data);
-  //     setItems(response.data);
-  //   } catch (error) {
-  //     console.error(`Error fetching ${selectedMode}s:`, error);
-  //     console.error("Response data:", error.response?.data);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [selectedMode, fetchData]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -426,6 +407,19 @@ const AdminPage = () => {
     console.log("Selected Action Changed: ", selectedAction);
   }, [selectedAction]);
 
+  const viewBookingsClicked = async () => {
+    try {
+      const response = await BookingService.getAllBookings(); // Await the API response
+  
+      navigate("/adminViewBookings", {
+        state: { bookings: response.data },
+      });
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  };
+  
+
   return (
     <div className="admin-content-container">
       <div className="admin-content">
@@ -448,20 +442,6 @@ const AdminPage = () => {
                 </button>
               </div>
 
-              {/* <div className="trip-details-input">
-                <button
-                  type="button"
-                  onClick={() => setSelectedAction("update")}
-                >
-                  Update{" "}
-                  {selectedMode === "flight"
-                    ? "Flights"
-                    : selectedMode === "train"
-                    ? "Trains"
-                    : "Buses"}
-                </button>
-              </div> */}
-
               <div className="trip-details-input">
                 <button type="button" onClick={() => setSelectedAction("view")}>
                   View{" "}
@@ -473,16 +453,6 @@ const AdminPage = () => {
                 </button>
               </div>
 
-              {/* <div className="trip-details-input">
-                <button>
-                  Delete{" "}
-                  {selectedMode === "flight"
-                    ? "Flights"
-                    : selectedMode === "train"
-                    ? "Trains"
-                    : "Buses"}
-                </button>
-              </div> */}
             </div>
           )}
         </form>
@@ -492,6 +462,8 @@ const AdminPage = () => {
 
         {/* Render Table */}
         {renderTable()}
+
+        <button className="admin-view-bookings" onClick={viewBookingsClicked}>View Bookings</button>
       </div>
     </div>
   );

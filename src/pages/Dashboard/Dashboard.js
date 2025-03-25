@@ -1,5 +1,5 @@
 import "./Dashboard.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../components/Context/Context";
 import Modal from "../../components/Modal/Modal";
 import { createPortal } from "react-dom";
@@ -51,6 +51,24 @@ const Dashboard = () => {
       myContext.displayPortal(false);
       //   navigate("/");  // Redirect to login after logout
     }, 2000);
+  };
+
+  // const [bookingHistory, setBookingHistory] = useState([]);
+  // const viewBookingHistoryClicked = async () => {
+  //   try {
+  //     console.log("viewBookingHistoryClicked in Dashboard.js - passenger id: ", myContext.currUser.passengerId);
+  //     const response = await BookingService.getBookingsByPassengerId(myContext.currUser.passengerId); // Fetch bookings
+  //     console.log("viewBookingHistoryClicked in Dashboard.js - response.data: ", response.data);
+  //     setBookingHistory(response.data); // Store data in state
+  //   } catch (error) {
+  //     console.error("Error fetching booking history:", error);
+  //   }
+  // };
+
+  const viewBookingHistoryClicked = () => {
+    navigate("/bookingHistory", {
+      state: { passengerId: myContext.currUser.passengerId },
+    });
   };
 
   return (
@@ -112,6 +130,10 @@ const Dashboard = () => {
               <p>
                 Age: <span id="age">{myContext.currUser.age || "N/A"}</span>
               </p>
+
+              <button className="booking-history" onClick={viewBookingHistoryClicked}>
+                View Booking History
+              </button>
             </>
           )}
         </div>
