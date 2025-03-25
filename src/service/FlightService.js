@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PORT = 8080;
+const PORT = 9090;
 const API_URL = `http://localhost:${PORT}/api/flights`;
 
 class FlightService {
@@ -16,8 +16,8 @@ class FlightService {
     return await axios.post(API_URL, flight);
   }
 
-  async updateAvailableSeats(flightId, newSeats) {
-    return await axios.put(`${API_URL}/${flightId}/seats`, null, { params: { newSeats } });
+  async updateFlight(flightId, flight) {
+    return await axios.put(`${API_URL}/${flightId}`, flight);
   }
 
   async deleteFlight(flightId) {

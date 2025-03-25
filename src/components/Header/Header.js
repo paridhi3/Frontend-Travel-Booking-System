@@ -12,11 +12,6 @@ const Header = () => {
   const myContext = useContext(MyContext);
   const location = useLocation();
 
-  const currUser =
-    myContext.currUser && Object.keys(myContext.currUser).length > 0
-      ? myContext.currUser
-      : null;
-
   const currAdmin =
     myContext.currAdmin && Object.keys(myContext.currAdmin).length > 0
       ? myContext.currAdmin
@@ -40,7 +35,7 @@ const Header = () => {
         <Link to={"/"}>
           <img className="logo" src={logo} alt="logo" />
         </Link>
-        {/* {myContext.loggedInUser || myContext.loggedInAdmin ? ( */}
+
         {currLoggedIn && Object.keys(currLoggedIn).length > 0 ? (
           <Link to={"/dashboard"} className="user-profile">
             <img
@@ -66,10 +61,12 @@ const Header = () => {
         )}
       </nav>
 
-      {location.pathname !== "/adminPage" && (
+      {/* Show Flights, Trains, Buses if a user is logged in */}
+      {myContext.currUser && (
         <div className="pages-link">
           <NavLink
             className={({ isActive }) =>
+              // `page-link ${isActive ? "active" : ""}`
               `page-link ${
                 isActive ||
                 (myContext.intoHome && window.location.pathname === "/")
@@ -81,43 +78,44 @@ const Header = () => {
           >
             <GiCommercialAirplane /> Flights
           </NavLink>
-
-          <NavLink className={"page-link"} to={"/train"}>
-            <FaTrain /> Trains
+          <NavLink className="page-link" to={"/train"}>
+            {" "}
+            <FaTrain /> Trains{" "}
           </NavLink>
-
-          <NavLink className={"page-link"} to={"/bus"}>
-            <FaBus /> Buses
+          <NavLink className="page-link" to={"/bus"}>
+            {" "}
+            <FaBus /> Buses{" "}
           </NavLink>
         </div>
       )}
 
-      {currAdmin &&
-        (window.location.pathname.startsWith("/adminPage") ||
-          window.location.pathname.startsWith("/manage")) && (
-          <div className="pages-link">
-            <NavLink
-              className={({ isActive }) =>
-                `page-link ${
-                  isActive || window.location.pathname === "/adminPage"
-                    ? "active"
-                    : ""
-                }`
-              }
-              to="/manageFlight"
-            >
-              <GiCommercialAirplane /> Manage Flights
-            </NavLink>
-
-            <NavLink className={"page-link"} to={"/manageTrain"}>
-              <FaTrain /> Manage Trains
-            </NavLink>
-
-            <NavLink className={"page-link"} to={"/manageBus"}>
-              <FaBus /> Manage Buses
-            </NavLink>
-          </div>
-        )}
+      {/* Show Manage Flights, Manage Trains, Manage Buses if an admin is logged in */}
+      {currAdmin && (
+        <div className="pages-link">
+          <NavLink
+            className={({ isActive }) =>
+              // `page-link ${isActive ? "active" : ""}`
+              `page-link ${
+                isActive ||
+                (window.location.pathname === "/adminPage")
+                  ? "active"
+                  : ""
+              }`
+            }
+            to="/manageFlight"
+          >
+            <GiCommercialAirplane /> Manage Flights
+          </NavLink>
+          <NavLink className="page-link" to={"/manageTrain"}>
+            {" "}
+            <FaTrain /> Manage Trains{" "}
+          </NavLink>
+          <NavLink className="page-link" to={"/manageBus"}>
+            {" "}
+            <FaBus /> Manage Buses{" "}
+          </NavLink>
+        </div>
+      )}
     </div>
   );
 };

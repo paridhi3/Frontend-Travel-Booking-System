@@ -30,12 +30,12 @@
     border: 1px rgb(0, 0, 146) solid;
 }
 .left-side button{
+    margin-top: 0;
     width: 8rem;
     outline: none;
     border: none;
-    border-radius: 1rem;
     color: white;
-    background-color: red;
+    background-color: #f04e5e;
     font-size: 15px;
     font-weight: bold;
     font-family: 'Poppins';
@@ -48,7 +48,7 @@
 }
 .left-side button:active{
     color: white;
-    background-color: red;
+    background-color: #f04e5e;
     box-shadow: none;
     transform: scale(0.98);
 }
@@ -62,4 +62,16 @@
 }
 .right-side #name{
     color: black;
+}
+
+.right-side .go-to-admin-page a {
+    color: white;
+    font-weight: bold;
+    font-family: 'Poppins';
+    font-size: 15px;
+    text-decoration: none; /* Optional: Removes underline */
+}
+
+.right-side .go-to-admin-page a:visited {
+    color: white; /* Ensures the color stays white after being visited */
 }

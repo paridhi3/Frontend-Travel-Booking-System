@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PORT = 8080;
+const PORT = 9090;
 const API_URL = `http://localhost:${PORT}/api/buses`;
 
 class BusService {
@@ -24,8 +24,8 @@ class BusService {
     return await axios.post(API_URL, bus);
   }
 
-  async updateBus(bus) {
-    return await axios.put(API_URL, bus);
+  async updateBus(busId, bus) {
+    return await axios.put(`${API_URL}/${busId}`, bus);
   }
 
   async deleteBus(busId) {

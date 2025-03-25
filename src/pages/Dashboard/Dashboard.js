@@ -4,6 +4,7 @@ import { MyContext } from "../../components/Context/Context";
 import Modal from "../../components/Modal/Modal";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { capitalizeFullName } from "../../Utils";
 
 const Dashboard = () => {
@@ -30,28 +31,27 @@ const Dashboard = () => {
     myContext.displayPortal(false); // Reset portal view when the dashboard loads
   }, [myContext, navigate]);
 
-const signOutClicked = () => {
+  const signOutClicked = () => {
     if (myContext.currUser && Object.keys(myContext.currUser).length > 0) {
       myContext.logoutUser();
       myContext.displayPortal(true);
-    //   localStorage.removeItem("loggedInUser");
-    //   localStorage.removeItem("isUserLoggedIn");
+      //   localStorage.removeItem("loggedInUser");
+      //   localStorage.removeItem("isUserLoggedIn");
     } else if (
       myContext.currAdmin &&
       Object.keys(myContext.currAdmin).length > 0
     ) {
       myContext.logoutAdmin();
       myContext.displayPortal(true);
-    //   localStorage.removeItem("loggedInAdmin");  // ✅ Clear stored admin data
-    //   localStorage.removeItem("isAdminLoggedIn");
+      //   localStorage.removeItem("loggedInAdmin");  // ✅ Clear stored admin data
+      //   localStorage.removeItem("isAdminLoggedIn");
     }
-  
+
     setTimeout(() => {
       myContext.displayPortal(false);
-    //   navigate("/");  // Redirect to login after logout
+      //   navigate("/");  // Redirect to login after logout
     }, 2000);
-  };  
-  
+  };
 
   return (
     <div className="dashboard-container">
@@ -88,6 +88,15 @@ const signOutClicked = () => {
           <p>
             Email ID: <span id="email">{currLoggedIn?.email}</span>
           </p>
+
+          {/* Display only if it's admin */}
+          {myContext.currAdmin?.email && (
+            <>
+              <button className="go-to-admin-page">
+                <Link to="/adminPage">Admin Page</Link>
+              </button>
+            </>
+          )}
 
           {/* Display extra user details only if it's a user */}
           {myContext.currUser?.email && (

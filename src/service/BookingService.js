@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PORT = 8080;
+const PORT = 9090;
 const API_URL = `http://localhost:${PORT}/api/bookings`;
 
 class BookingService {

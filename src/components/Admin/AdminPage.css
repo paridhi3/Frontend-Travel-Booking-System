@@ -27,16 +27,14 @@
   align-items: center;
   /* position: relative; */
 }
-.trip-type,
-.room-type {
+.trip-type {
   width: 100%;
   height: 2rem;
   /* background-color: red; */
   display: flex;
   align-items: center;
 }
-.trip-type div,
-.room-type div {
+.trip-type div {
   margin-right: 2rem;
   border-radius: 20px;
   padding: 5px;
@@ -55,16 +53,14 @@
 .room-type input {
   cursor: pointer;
 }
-.trip-details,
-.room-details {
-  width: 71rem;
+.trip-details {
+  width: fit-content;
   height: 7rem;
   margin-top: 1rem;
   /* background-color: blue; */
   border: solid 1px #e7e7e7;
   border-radius: 10px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
 }
 .trip-details-input,
 .room-details-input {
@@ -249,7 +245,7 @@
 
 /* Table Styling */
 table {
-  width: 90%;
+  margin: auto;
   margin-top: 20px;
   border-collapse: collapse;
   background: #fff;
@@ -274,7 +270,7 @@ table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-table button {
+table .delete-button {
   background-color: #dc3545;
   color: white;
   border: none;
@@ -283,6 +279,19 @@ table button {
   border-radius: 4px;
 }
 
-table button:hover {
+table .update-button {
+  background-color: navy;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+table .delete-button:hover {
   background-color: #c82333;
+}
+
+table .update-button:hover {
+  background-color: black;
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PORT = 8080;
+const PORT = 9090;
 const API_URL = `http://localhost:${PORT}/api/trains`;
 
 class TrainService {
@@ -16,8 +16,8 @@ class TrainService {
     return await axios.post(API_URL, train);
   }
 
-  async updateTrain(trainId, trainData) {
-    return await axios.put(`${API_URL}/${trainId}`, trainData);
+  async updateTrain(trainId, train) {
+    return await axios.put(`${API_URL}/${trainId}`, train);
   }
 
   async deleteTrain(trainId) {
