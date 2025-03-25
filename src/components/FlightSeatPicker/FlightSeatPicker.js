@@ -16,6 +16,7 @@ const FlightSeatPicker = ({
   console.log("(FlightSeatPicker.js) passengerDetails: ", passengerDetails);
   console.log("(FlightSeatPicker.js) transportDetails: ", transportDetails);
   console.log("travelDate: ", travelDate);
+  console.log("(FlightSeatPicker.js) availability: ", availability);
   const navigate = useNavigate();
 
   const [selectedSeat, setSelectedSeat] = useState(null);
@@ -27,11 +28,21 @@ const FlightSeatPicker = ({
   console.log("Availability Object:", availability);
   console.log("Rendering FlightSeatPicker - Occupied Seats:", occupiedSeats);
 
-  // Generate seat layout (Assuming rows=6, cols=6)
-  const seatRows = "ABCDEF";
-  const seats = seatRows
-    .split("")
-    .flatMap((row) => Array.from({ length: 6 }, (_, i) => `${row}${i + 1}`));
+  const generateSeatLayout = (totalSeats) => {
+    const maxCols = 5; // Maximum number of seats per row
+    const numRows = Math.ceil(totalSeats / maxCols); // Calculate the number of rows needed
+    const seatRows = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].slice(0, numRows); // Generate row labels (A, B, C, etc.) in array format
+  
+    return seatRows.flatMap((row, rowIndex) =>
+      // Generate seat numbers for each row
+      Array.from(
+        { length: Math.min(maxCols, totalSeats - rowIndex * maxCols) }, // Ensure last row has remaining seats
+        (_, i) => `${row}${i + 1}` // Format seat label (e.g., A1, A2, ..., B1, B2, etc.)
+      )
+    );
+  };  
+  
+  const seats = generateSeatLayout(transportDetails.totalSeats);
 
   const handleSeatClick = (seat) => {
     if (occupiedSeats.includes(seat)) return; // Prevent booking an occupied seat
@@ -77,7 +88,7 @@ const FlightSeatPicker = ({
         {/* Left window strip */}
         <div className="window-strip"></div>
 
-        <div className="seats-grid">
+        <div className="flight-seats-grid">
           {seats.map((seat) => (
             <div
               key={seat}

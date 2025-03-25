@@ -4,7 +4,13 @@ import { MyContext } from "../Context/Context";
 import { MdOutlineAirlineSeatReclineExtra } from "react-icons/md";
 import "../../styles/transport/SeatPicker.css";
 
-const TrainSeatPicker = ({ availability, onSelectSeat, transportDetails, passengerDetails, travelDate }) => {
+const TrainSeatPicker = ({
+  availability,
+  onSelectSeat,
+  transportDetails,
+  passengerDetails,
+  travelDate,
+}) => {
   const myContext = useContext(MyContext);
 
   console.log("(TrainSeatPicker.js) passengerDetails: ", passengerDetails);
@@ -21,11 +27,21 @@ const TrainSeatPicker = ({ availability, onSelectSeat, transportDetails, passeng
   console.log("Availability Object:", availability);
   console.log("Rendering TrainSeatPicker - Occupied Seats:", occupiedSeats);
 
-  // Generate seat layout (Assuming rows=6, cols=6)
-  const seatRows = "ABCDEF";
-  const seats = seatRows.split("").flatMap((row) =>
-    Array.from({ length: 6 }, (_, i) => `${row}${i + 1}`)
-  );
+  const generateSeatLayout = (totalSeats) => {
+    const maxCols = 5; // Maximum number of seats per row
+    const numRows = Math.ceil(totalSeats / maxCols); // Calculate the number of rows needed
+    const seatRows = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].slice(0, numRows); // Generate row labels (A, B, C, etc.) in array format
+
+    return seatRows.flatMap((row, rowIndex) =>
+      // Generate seat numbers for each row
+      Array.from(
+        { length: Math.min(maxCols, totalSeats - rowIndex * maxCols) }, // Ensure last row has remaining seats
+        (_, i) => `${row}${i + 1}` // Format seat label (e.g., A1, A2, ..., B1, B2, etc.)
+      )
+    );
+  };
+
+  const seats = generateSeatLayout(transportDetails.totalSeats);
 
   const handleSeatClick = (seat) => {
     if (occupiedSeats.includes(seat)) return; // Prevent booking an occupied seat
@@ -33,23 +49,22 @@ const TrainSeatPicker = ({ availability, onSelectSeat, transportDetails, passeng
   };
 
   const handleBookClicked = async () => {
-  
     if (!myContext.currUser.email) {
       console.log("User not logged in, showing login portal.");
       myContext.displayPortal(true); // Open login modal if user is not logged in
       return;
     }
-  
+
     if (!selectedSeat) {
       console.log("No seat selected, button should be disabled.");
       return;
     }
-  
+
     try {
-      onSelectSeat(selectedSeat); 
-  
+      onSelectSeat(selectedSeat);
+
       console.log("Seat selected successfully! Navigating to checkout...");
-      
+
       navigate("/checkout", {
         state: {
           seatNumber: selectedSeat,
@@ -62,27 +77,33 @@ const TrainSeatPicker = ({ availability, onSelectSeat, transportDetails, passeng
       console.error("Seat selection failed with error:", error);
       navigate("/"); // ✅ Redirect to home on failure
     }
-  };  
-  
-  
+  };
 
   return (
     <div className="seat-picker-container">
       <h2>Select Your Seats</h2>
 
-      <div className="seats-grid">
-        {seats.map((seat) => (
-          <div
-            key={seat}
-            className={`seat ${selectedSeat === seat ? "selected" : ""} 
-                        ${occupiedSeats.includes(seat) ? "occupied" : ""}`}
-            onClick={() => handleSeatClick(seat)}
-          >
-            <MdOutlineAirlineSeatReclineExtra />
-            <span>{seat}</span>
-          </div>
-        ))}
-      </div>
+      <div className="transport-body">
+              {/* Left window strip */}
+              <div className="window-strip"></div>
+      
+              <div className="train-seats-grid">
+                {seats.map((seat) => (
+                  <div
+                    key={seat}
+                    className={`seat ${selectedSeat === seat ? "selected" : ""} 
+                              ${occupiedSeats.includes(seat) ? "occupied" : ""}`}
+                    onClick={() => handleSeatClick(seat)}
+                  >
+                    <MdOutlineAirlineSeatReclineExtra />
+                    <span>{seat}</span>
+                  </div>
+                ))}
+              </div>
+      
+              {/* Right window strip */}
+              <div className="window-strip"></div>
+            </div>
 
       {/* Seat Legend */}
       <div className="seat-legend">

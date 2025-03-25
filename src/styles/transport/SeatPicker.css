@@ -22,7 +22,7 @@
   /* Windows Strip */
   .window-strip {
       width: 20px;
-      height: 200px;
+      height: 30rem;
       transform: skew(20deg);
       rotate: 20deg;
       background: #ccc;
@@ -30,9 +30,23 @@
   }
   
   /* Seats Grid */
-  .seats-grid {
+  .flight-seats-grid {
     display: grid;
-    grid-template-columns: repeat(6, 50px);
+    grid-template-columns: auto 100px auto auto auto; /* 2 seats, aisle (gap), 3 seats */
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .train-seats-grid {
+    display: grid;
+    grid-template-columns: auto 100px auto auto auto; /* 2 seats, aisle (gap), 3 seats */
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .bus-seats-grid {
+    display: grid;
+    grid-template-columns: auto 100px auto auto auto; /* 2 seats, aisle (gap), 3 seats */
     gap: 10px;
     justify-content: center;
   }
