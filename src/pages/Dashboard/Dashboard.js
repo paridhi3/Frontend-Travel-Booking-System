@@ -34,36 +34,22 @@ const Dashboard = () => {
   const signOutClicked = () => {
     if (myContext.currUser && Object.keys(myContext.currUser).length > 0) {
       myContext.logoutUser();
-      myContext.displayPortal(true);
-      //   localStorage.removeItem("loggedInUser");
-      //   localStorage.removeItem("isUserLoggedIn");
+      // myContext.displayPortal(true);
+      // localStorage.removeItem("loggedInUser");
+      // localStorage.removeItem("isUserLoggedIn");
     } else if (
       myContext.currAdmin &&
       Object.keys(myContext.currAdmin).length > 0
     ) {
       myContext.logoutAdmin();
-      myContext.displayPortal(true);
-      //   localStorage.removeItem("loggedInAdmin");  // ✅ Clear stored admin data
-      //   localStorage.removeItem("isAdminLoggedIn");
+      // myContext.displayPortal(true);
+      // localStorage.removeItem("loggedInAdmin"); // ✅ Clear stored admin data
+      // localStorage.removeItem("isAdminLoggedIn");
     }
-
-    setTimeout(() => {
-      myContext.displayPortal(false);
-      //   navigate("/");  // Redirect to login after logout
-    }, 2000);
+    myContext.displayPortal(true);
+      // myContext.displayPortal(false);
+      navigate("/");
   };
-
-  // const [bookingHistory, setBookingHistory] = useState([]);
-  // const viewBookingHistoryClicked = async () => {
-  //   try {
-  //     console.log("viewBookingHistoryClicked in Dashboard.js - passenger id: ", myContext.currUser.passengerId);
-  //     const response = await BookingService.getBookingsByPassengerId(myContext.currUser.passengerId); // Fetch bookings
-  //     console.log("viewBookingHistoryClicked in Dashboard.js - response.data: ", response.data);
-  //     setBookingHistory(response.data); // Store data in state
-  //   } catch (error) {
-  //     console.error("Error fetching booking history:", error);
-  //   }
-  // };
 
   const viewBookingHistoryClicked = () => {
     navigate("/bookingHistory", {
@@ -86,7 +72,7 @@ const Dashboard = () => {
                 : "Guest"} */}
               {currLoggedIn
                 ? capitalizeFullName(currLoggedIn?.fullName?.split(" ")[0])
-                : "Guest"}
+                : null}
             </span>
           </p>
           <button onClick={signOutClicked}>Sign Out</button>
@@ -100,7 +86,7 @@ const Dashboard = () => {
                 : "Guest"} */}
               {currLoggedIn
                 ? capitalizeFullName(currLoggedIn?.fullName?.split(" ")[0])
-                : "Guest"}
+                : null}
             </span>
           </p>
           <p>
@@ -131,7 +117,10 @@ const Dashboard = () => {
                 Age: <span id="age">{myContext.currUser.age || "N/A"}</span>
               </p>
 
-              <button className="booking-history" onClick={viewBookingHistoryClicked}>
+              <button
+                className="booking-history"
+                onClick={viewBookingHistoryClicked}
+              >
                 View Booking History
               </button>
             </>

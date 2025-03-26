@@ -89,10 +89,12 @@ const AdminLogIn = () => {
   useEffect(() => {
     if (myContext.currAdmin && myContext.currAdmin.email) {
       setTimeout(() => {
+        console.log("(AdminLogin.js) Updating portalView to true");
         myContext.displayPortal(true);
       }, 0);
     }
   }, [myContext, myContext.currAdmin]);
+  
 
   return (
     <div className="admin-login-container">

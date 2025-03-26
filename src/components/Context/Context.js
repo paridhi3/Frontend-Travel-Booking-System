@@ -10,7 +10,14 @@ const ContextProvider = (props) => {
 
   /***  OTHER STATE VARIABLES ***/
   const [portalView, setPortalView] = useState(false);
-  const displayPortal = (value) => setPortalView(value);
+  const displayPortal = (value) => {
+    setPortalView((prev) => {
+      if (prev === value) return prev;  
+      console.log("Setting portalView to:", value);
+      return value;
+    });
+  };
+  
 
   /***  USER STATE ***/
   const [loggedInUser, setLoggedInUser] = useState(false);
@@ -21,6 +28,7 @@ const ContextProvider = (props) => {
   const [currAdmin, setCurrAdmin] = useState({});
 
   /***  LOAD STORED USER & ADMIN ***/
+
   useEffect(() => {
 
     // Load User from Local Storage
@@ -94,11 +102,12 @@ const ContextProvider = (props) => {
     setLoggedInUser(false);
     localStorage.removeItem("loggedInUser");
     localStorage.removeItem("isUserLoggedIn");
+    
   };
 
   /*** FUNCTION TO LOGOUT ADMIN ***/
   const logoutAdmin = () => {
-    setCurrAdmin(null);
+    setCurrAdmin({});
     setLoggedInAdmin(false);
     localStorage.removeItem("loggedInAdmin");
     localStorage.removeItem("isAdminLoggedIn");

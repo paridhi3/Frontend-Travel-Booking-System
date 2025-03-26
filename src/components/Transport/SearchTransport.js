@@ -20,6 +20,7 @@ const months = [
 const today = getDate(new Date());
 
 const SearchTransport = ({ transportType, onSearch }) => {
+
   const initialState = () => {
     if (transportType === "flight") {
       return {
@@ -32,7 +33,7 @@ const SearchTransport = ({ transportType, onSearch }) => {
     } else if (transportType === "bus") {
       return { source: "Delhi", destination: "Mumbai", travelClass: "AC" };
     }
-    return { source: "", destination: "", travelClass: "" }; // Default fallback
+    return { source: "", destination: "", travelClass: "" };
   };
 
   const [state, setState] = useState(initialState);
@@ -88,6 +89,7 @@ const SearchTransport = ({ transportType, onSearch }) => {
         <form onSubmit={handleSearchClick} className="search-content-form">
           <div className="trip-details">
             <div className="trip-details-input">
+              
               <label htmlFor="from">From</label>
               <input
                 autoComplete="off"

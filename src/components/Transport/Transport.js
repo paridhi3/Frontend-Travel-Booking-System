@@ -200,10 +200,6 @@ const Transport = () => {
           <div className="transport-tickets-container">
             <h1>Available {headingLabel}</h1>
             <div className="transport-tickets">
-              {console.log(
-                "Transport IDs:",
-                transports.map((t) => t.busId || t.trainId || t.flightId)
-              )}
               {transports.length > 0 ? (
                 transports.map((transport) => (
                   <FetchTransport
