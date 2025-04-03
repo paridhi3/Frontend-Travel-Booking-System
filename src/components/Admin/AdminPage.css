@@ -10,7 +10,7 @@
 }
 .admin-content {
   box-sizing: border-box;
-  width: 75rem;
+  width: 90%;
   padding: 3.5rem 2rem 2rem 2rem;
   background-color: white;
   border-radius: 1rem;
@@ -80,7 +80,7 @@
 .room-details-input:hover {
   background-color: #eaf5ff;
 }
-
+ 
 .trip-details-input:first-child,
 .room-details-input:first-child {
   border-radius: 10px 0px 0px 10px;
@@ -171,7 +171,7 @@
   font-size: xx-large;
   font-weight: bold;
 }
-
+ 
 #search-btn {
   width: 13.5rem;
   height: 2.8rem;
@@ -200,9 +200,9 @@
 #search-btn:active {
   transform: scale(1);
 }
-
+ 
 /*---------------------------------------------------------------------------------------------------*/
-
+ 
 .add-update-form {
   margin: auto;
   background: #fff;
@@ -213,14 +213,14 @@
   display: flex;
   flex-direction: column;
 }
-
+ 
 .add-update-form label {
   font-weight: bold;
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
 }
-
+ 
 .add-update-form input,
 .add-update-form select {
   padding: 8px;
@@ -228,7 +228,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
+ 
 .add-update-form button {
   background-color: #28a745;
   color: white;
@@ -239,11 +239,11 @@
   font-size: 16px;
   margin-top: 10px;
 }
-
+ 
 .add-update-form button:hover {
   background-color: #218838;
 }
-
+ 
 /* Table Styling */
 table {
   margin: auto;
@@ -254,23 +254,23 @@ table {
   border-radius: 8px;
   overflow: hidden;
 }
-
+ 
 table th,
 table td {
   padding: 12px;
   text-align: left;
   border: 1px solid #ddd;
 }
-
+ 
 table th {
   background-color: #007bff;
   color: white;
 }
-
+ 
 table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
+ 
 table .delete-button {
   background-color: #dc3545;
   color: white;
@@ -279,7 +279,7 @@ table .delete-button {
   cursor: pointer;
   border-radius: 4px;
 }
-
+ 
 table .update-button {
   background-color: navy;
   color: white;
@@ -288,15 +288,15 @@ table .update-button {
   cursor: pointer;
   border-radius: 4px;
 }
-
+ 
 table .delete-button:hover {
   background-color: #c82333;
 }
-
+ 
 table .update-button:hover {
   background-color: black;
 }
-
+ 
 .admin-view-bookings {
   width: fit-content;
   padding: 10px;
