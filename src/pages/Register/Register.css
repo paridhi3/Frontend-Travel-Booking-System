@@ -8,7 +8,7 @@
 }
 .register{
     box-sizing: border-box;
-    width: 75rem;
+    width: 80%;
     /* height: 34rem; */
     border-radius: 1rem;
     padding-top: 2rem;
@@ -46,7 +46,7 @@
     border-radius: 0.5rem;
     font-family: 'Poppins';
 }
-
+ 
 .register select{
     width: 20rem;
     /* margin: 1rem; */
@@ -57,28 +57,28 @@
     border-radius: 0.5rem;
     font-family: 'Poppins';
 }
-
+ 
 .register .register-container:hover{
     background-color: rgb(235, 235, 235);
 }
 .register .gender-select:hover{
     background-color: rgb(235, 235, 235);
 }
-
+ 
 .register .register-input:focus{
     border: 2px rgba(0, 204, 255, 0.774) solid;
 }
 .register .gender-select:focus{
     border: 2px rgba(0, 204, 255, 0.774) solid;
 }
-
+ 
 .register .password-container{
     margin-left: 1.5rem;
     position: relative;
     align-items: center;
     display: flex;
 }
-
+ 
 .register #submit{
     width: 20rem;
     box-sizing: border-box;
@@ -112,14 +112,14 @@
 .register a:active{
     color: blueviolet;
 }
-
+ 
 .password-input {
     width: 100%;
     padding: 10px 40px 10px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
+ 
 .toggle-password-icon-register {
     width: 20px;
     height: 20px;
