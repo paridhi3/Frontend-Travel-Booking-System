@@ -8,7 +8,7 @@
 }
 .login-form{
     box-sizing: border-box;
-    width: 75rem;
+    width: 80%;
     /* height: 30rem; */
     border-radius: 1rem;
     padding-top: 2rem;
@@ -46,21 +46,21 @@
     border-radius: 0.5rem;
     font-family: 'Poppins';
 }
-
+ 
 .login-form input:hover{
     background-color: rgb(235, 235, 235);
 }
 .login-form input:focus{
     border: 2px rgba(0, 204, 255, 0.774) solid;
 }
-
+ 
 .login-form .password-container{
     margin-left: 1.5rem;
     position: relative;
     align-items: center;
     display: flex;
 }
-
+ 
 .login-form #submit{
     width: 20rem;
     box-sizing: border-box;
@@ -94,7 +94,7 @@
 .login-form a:active{
     color: blueviolet;
 }
-
+ 
 .password-input {
     margin-left: 0;
     width: 100%;
@@ -102,7 +102,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
+ 
 .toggle-password-icon {
     right: 10px; /* Adjust position */
     width: 20px;
