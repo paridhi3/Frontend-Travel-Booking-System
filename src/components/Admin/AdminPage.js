@@ -6,7 +6,7 @@ import TrainService from "../../service/TrainService";
 import BusService from "../../service/BusService";
 import BookingService from "../../service/BookingService";
 import { capitalizeFullName } from "../../Utils.js";
-
+ 
 const AdminPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,9 +21,24 @@ const AdminPage = () => {
     arrivalTime: "",
     price: "",
     totalSeats: "",
-    class: "",
+    class: "DEFAULT",
   });
-
+ 
+  useEffect(() => {
+    // Reset the form whenever selectedMode changes
+    setFormData({
+      name: "",
+      from: "",
+      to: "",
+      departureTime: "",
+      arrivalTime: "",
+      price: "",
+      totalSeats: "",
+      class: "DEFAULT",
+    });
+    console.log("Form reset due to mode change");
+  }, [selectedMode]);
+ 
   useEffect(() => {
     if (
       location.pathname.includes("manageFlight") ||
@@ -36,7 +51,7 @@ const AdminPage = () => {
       setSelectedMode("bus");
     }
   }, [location.pathname]);
-
+ 
   const fetchData = useCallback(async () => {
     try {
       let response;
@@ -54,18 +69,18 @@ const AdminPage = () => {
       console.error("Response data:", error.response?.data);
     }
   }, [selectedMode]);
-
+ 
   useEffect(() => {
     fetchData();
   }, [selectedMode, fetchData]);
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(
       "(AdminPage.js - handleSubmit) Submitting formData: ",
       formData
     );
-
+ 
     try {
       if (selectedAction === "add" || selectedAction === "update") {
         let formattedData = {
@@ -76,7 +91,7 @@ const AdminPage = () => {
           price: parseFloat(formData.price),
           totalSeats: parseInt(formData.totalSeats),
         };
-
+ 
         if (selectedMode === "flight") {
           formattedData = {
             ...formattedData,
@@ -84,6 +99,7 @@ const AdminPage = () => {
             flightClass: formData.class,
           };
           if (selectedAction === "add") {
+            console.log("HandleSubmit - flightClass: ", formattedData.flightClass);
             await FlightService.addFlight(formattedData);
             alert("Flight added successfully!");
           } else if (selectedAction === "update") {
@@ -118,7 +134,7 @@ const AdminPage = () => {
           }
         }
       }
-
+ 
       fetchData();
       setSelectedAction(null);
     } catch (error) {
@@ -126,7 +142,7 @@ const AdminPage = () => {
       console.error("Response data:", error.response?.data);
     }
   };
-
+ 
   const prepareUpdateForm = (item) => {
     setFormData({
       id: item.flightId || item.trainId || item.busId,
@@ -145,7 +161,7 @@ const AdminPage = () => {
     });
     setSelectedAction("update");
   };
-
+ 
   const handleDelete = async (id) => {
     try {
       if (selectedMode === "flight") {
@@ -160,9 +176,9 @@ const AdminPage = () => {
       console.error(`Error deleting ${selectedMode}:`, error);
     }
   };
-
+ 
   //-------------------------------------------------------------------------------
-
+ 
   const renderForm = () => {
     if (selectedAction === "add" || selectedAction === "update") {
       return (
@@ -247,7 +263,7 @@ const AdminPage = () => {
               required
             />
           </label>
-
+ 
           <label>
             {selectedMode === "flight"
               ? "Flight Class"
@@ -256,12 +272,14 @@ const AdminPage = () => {
               : "Bus Type"}
             :
             <select
-              value={formData.flightClass}
-              onChange={(e) =>
-                setFormData({ ...formData, flightClass: e.target.value })
-              }
+              value={formData.class}
+              onChange={(e) => {
+                console.log("Selected class: ", e.target.value);
+                setFormData({ ...formData, class: e.target.value });
+              }}
               required
             >
+              <option value="DEFAULT" disabled>Select Class</option>
               {selectedMode === "flight" && (
                 <>
                   <option value="ECONOMY">Economy</option>
@@ -288,7 +306,7 @@ const AdminPage = () => {
               )}
             </select>
           </label>
-
+ 
           <button type="submit">
             {selectedAction === "add"
               ? `Add ${capitalizeFullName(selectedMode)}`
@@ -299,7 +317,7 @@ const AdminPage = () => {
     }
     return null;
   };
-
+ 
   const renderTable = () => {
     if (selectedAction === "view" && (!items || items.length === 0)) {
       return <p>No {selectedMode} added yet</p>;
@@ -386,7 +404,7 @@ const AdminPage = () => {
                   >
                     Delete
                   </button>
-
+ 
                   <button
                     className="update-button"
                     onClick={() => prepareUpdateForm(item)}
@@ -402,15 +420,15 @@ const AdminPage = () => {
     }
     return null;
   };
-
+ 
   useEffect(() => {
     console.log("Selected Action Changed: ", selectedAction);
   }, [selectedAction]);
-
+ 
   const viewBookingsClicked = async () => {
     try {
       const response = await BookingService.getAllBookings(); // Await the API response
-  
+ 
       navigate("/adminViewBookings", {
         state: { bookings: response.data },
       });
@@ -418,8 +436,8 @@ const AdminPage = () => {
       console.error("Error fetching bookings:", error);
     }
   };
-  
-
+ 
+ 
   return (
     <div className="admin-content-container">
       <div className="admin-content">
@@ -441,7 +459,7 @@ const AdminPage = () => {
                     : "Buses"}
                 </button>
               </div>
-
+ 
               <div className="trip-details-input">
                 <button type="button" onClick={() => setSelectedAction("view")}>
                   View{" "}
@@ -452,21 +470,21 @@ const AdminPage = () => {
                     : "Buses"}
                 </button>
               </div>
-
+ 
             </div>
           )}
         </form>
-
+ 
         {/* Render Form */}
         {renderForm()}
-
+ 
         {/* Render Table */}
         {renderTable()}
-
+ 
         <button className="admin-view-bookings" onClick={viewBookingsClicked}>View Bookings</button>
       </div>
     </div>
   );
 };
-
+ 
 export default AdminPage;
