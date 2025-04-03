@@ -1,12 +1,12 @@
 import "./AdminViewBookings.css";
 import { useLocation } from "react-router-dom";
 import { capitalizeFullName, formatDateTime } from "../../Utils";
-
+ 
 const AdminViewBookings = () => {
   const location = useLocation();
   const bookings = location.state?.bookings || [];
   console.log("(AdminViewBookings) bookings: ", bookings);
-
+ 
   return (
     <div>
       <h2 className="admin-view-bookings-heading">All Bookings</h2>
@@ -44,10 +44,10 @@ const AdminViewBookings = () => {
           </tbody>
         </table>
       ) : (
-        <p>No bookings available.</p>
+        <p style={{ color: "gray", fontWeight: "bold", textAlign: "center" }}>No bookings available.</p>
       )}
     </div>
   );
 };
-
+ 
 export default AdminViewBookings;
