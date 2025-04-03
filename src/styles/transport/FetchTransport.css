@@ -1,5 +1,5 @@
 .fetch-transport{
-    width: 75rem;
+    width: 90%;
     padding: 2rem 3rem;
     margin-bottom: 3rem;
     box-sizing: border-box;
@@ -29,7 +29,7 @@
     font-size: 22px;
     font-weight: normal;
 }
-
+ 
 #book-btn{
     width: 12rem;
     height: 2.5rem;
@@ -52,7 +52,7 @@
     cursor: pointer;
     transition: 250ms;
 }
-
+ 
 #book-btn:hover{
     transform: scale(1.05);
 }
