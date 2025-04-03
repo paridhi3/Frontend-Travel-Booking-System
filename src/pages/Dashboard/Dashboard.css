@@ -9,7 +9,7 @@
 }
 .dashboard {
   box-sizing: border-box;
-  width: 75rem;
+  width: 90%;
   height: 20rem;
   border-radius: 1rem;
   padding-top: 2rem;
@@ -41,7 +41,7 @@
   font-family: "Poppins";
   cursor: pointer;
 }
-
+ 
 .left-side button:hover {
   color: rgb(201, 201, 201);
   background-color: rgb(184, 0, 0);
@@ -63,7 +63,7 @@
 .right-side #name {
   color: black;
 }
-
+ 
 .right-side .go-to-admin-page a {
   color: white;
   font-weight: bold;
@@ -71,11 +71,11 @@
   font-size: 15px;
   text-decoration: none; /* Optional: Removes underline */
 }
-
+ 
 .right-side .go-to-admin-page a:visited {
   color: white; /* Ensures the color stays white after being visited */
 }
-
+ 
 .right-side .booking-history {
   margin-bottom: 50px;
   font-family: 'Poppins';
