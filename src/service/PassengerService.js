@@ -1,35 +1,34 @@
-import axios from "axios";
+import api from './axiosConfig';
 
-const PORT = 9090;
-const API_URL = `http://localhost:${PORT}/api/passengers`;
+const PASSENGERS_URL = '/passengers';
 
 class PassengerService {
   async getAllPassengers() {
-    return await axios.get(API_URL);
+    return await api.get(PASSENGERS_URL);
   }
 
   async getPassengerById(id) {
-    return await axios.get(`${API_URL}/${id}`);
+    return await api.get(`${PASSENGERS_URL}/${id}`);
   }
 
   async getPassengerByEmail(email) {
-    return await axios.get(`${API_URL}/email/${encodeURIComponent(email)}`);
+    return await api.get(`${PASSENGERS_URL}/email/${encodeURIComponent(email)}`);
   }
 
   async registerPassenger(passenger) {
-    return await axios.post(`${API_URL}/register`, passenger);
+    return await api.post(`${PASSENGERS_URL}/register`, passenger);
   }
 
   async loginPassenger(email, password) {
-    return await axios.post(`${API_URL}/req/login`, { email, password });
+    return await api.post(`${PASSENGERS_URL}/req/login`, { email, password });
   }
 
   async logoutPassenger() {
-    return await axios.post(`${API_URL}/logout`);
+    return await api.post(`${PASSENGERS_URL}/logout`);
   }
 
   async deletePassenger(id) {
-    return await axios.delete(`${API_URL}/${id}`);
+    return await api.delete(`${PASSENGERS_URL}/${id}`);
   }
 }
 

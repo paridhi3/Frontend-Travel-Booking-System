@@ -1,35 +1,34 @@
-import axios from "axios";
+import api from './axiosConfig';
 
-const PORT = 9090;
-const API_URL = `http://localhost:${PORT}/api/buses`;
+const BUSES_URL = '/buses';
 
 class BusService {
   async getAllBuses() {
-    return await axios.get(API_URL);
+    return await api.get(BUSES_URL);
   }
 
   async getBusById(busId) {
-    return await axios.get(`${API_URL}/${busId}`);
+    return await api.get(`${BUSES_URL}/${busId}`);
   }
 
   async getBusesByRoute(source, destination) {
-    return await axios.get(`${API_URL}/route`, { params: { source, destination } });
+    return await api.get(`${BUSES_URL}/route`, { params: { source, destination } });
   }
 
   async getBusesByPriceRange(minPrice, maxPrice) {
-    return await axios.get(`${API_URL}/price-range`, { params: { minPrice, maxPrice } });
+    return await api.get(`${BUSES_URL}/price-range`, { params: { minPrice, maxPrice } });
   }
 
   async addBus(bus) {
-    return await axios.post(API_URL, bus);
+    return await api.post(BUSES_URL, bus);
   }
 
   async updateBus(busId, bus) {
-    return await axios.put(`${API_URL}/${busId}`, bus);
+    return await api.put(`${BUSES_URL}/${busId}`, bus);
   }
 
   async deleteBus(busId) {
-    return await axios.delete(`${API_URL}/${busId}`);
+    return await api.delete(`${BUSES_URL}/${busId}`);
   }
 }
 

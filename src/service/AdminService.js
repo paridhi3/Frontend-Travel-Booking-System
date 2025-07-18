@@ -1,16 +1,15 @@
-import axios from "axios";
+import api from './axiosConfig';
 
-const PORT = 9090;
-const API_URL = `http://localhost:${PORT}/api/admin`;
+const ADMIN_URL = '/admin';
 
 class AdminService {
 
   async getAdminByEmail(email) {
-    return await axios.get(`${API_URL}/email/${encodeURIComponent(email)}`);
+    return await api.get(`${ADMIN_URL}/email/${encodeURIComponent(email)}`);
   }
 
   async loginAdmin(email, password) {
-    return await axios.post(`${API_URL}/login`, {email, password });
+    return await api.post(`${ADMIN_URL}/login`, { email, password });
   }
 }
 

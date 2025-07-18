@@ -1,27 +1,26 @@
-import axios from "axios";
+import api from './axiosConfig';
 
-const PORT = 9090;
-const API_URL = `http://localhost:${PORT}/api/flights`;
+const FLIGHTS_URL = '/flights'; // relative to baseURL set in api instance
 
 class FlightService {
   async getAllFlights() {
-    return await axios.get(API_URL);
+    return await api.get(FLIGHTS_URL);
   }
 
   async getFlightsByRoute(source, destination) {
-    return await axios.get(`${API_URL}/route`, { params: { source, destination } });
+    return await api.get(`${FLIGHTS_URL}/route`, { params: { source, destination } });
   }
 
   async addFlight(flight) {
-    return await axios.post(API_URL, flight);
+    return await api.post(FLIGHTS_URL, flight);
   }
 
   async updateFlight(flightId, flight) {
-    return await axios.put(`${API_URL}/${flightId}`, flight);
+    return await api.put(`${FLIGHTS_URL}/${flightId}`, flight);
   }
 
   async deleteFlight(flightId) {
-    return await axios.delete(`${API_URL}/${flightId}`);
+    return await api.delete(`${FLIGHTS_URL}/${flightId}`);
   }
 }
 

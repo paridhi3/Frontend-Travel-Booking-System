@@ -1,43 +1,42 @@
-import axios from "axios";
+import api from './axiosConfig';
 
-const PORT = 9090;
-const API_URL = `http://localhost:${PORT}/api/availability`;
+const AVAILABILITY_URL = '/availability'; // relative path to baseURL
 
 class AvailabilityService {
   async getAllAvailability() {
-    return await axios.get(API_URL);
+    return await api.get(AVAILABILITY_URL);
   }
 
   async getAvailabilityByTransportType(transportType) {
-    return await axios.get(`${API_URL}/by-type`, {
+    return await api.get(`${AVAILABILITY_URL}/by-type`, {
       params: { transportType },
     });
   }
 
   async getAvailabilityByTransportId(transportId) {
-    return await axios.get(`${API_URL}/by-id`, {
+    return await api.get(`${AVAILABILITY_URL}/by-id`, {
       params: { transportId },
     });
   }
 
   async getAvailabilityByTravelDate(travelDate) {
-    return await axios.get(`${API_URL}/by-date`, {
+    return await api.get(`${AVAILABILITY_URL}/by-date`, {
       params: { travelDate },
     });
   }
 
   async checkAvailability(transportId, transportType, travelDate) {
-    return await axios.get(`${API_URL}/check`, {
+    return await api.get(`${AVAILABILITY_URL}/check`, {
       params: { transportId, transportType, travelDate },
     });
   }
 
   async addTransportAvailability(availability) {
-    return await axios.post(API_URL, availability);
+    return await api.post(AVAILABILITY_URL, availability);
   }
 
   async reduceAvailableSeats(transportId, transportType, travelDate) {
-    return await axios.post(`${API_URL}/reduce-seats`, null, {
+    return await api.post(`${AVAILABILITY_URL}/reduce-seats`, null, {
       params: { transportId, transportType, travelDate },
     });
   }
